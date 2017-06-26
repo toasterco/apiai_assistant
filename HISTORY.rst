@@ -8,8 +8,9 @@ Release History
 
 Features:
 .........
-  - Simple responses
-  - Rich responses supported (carousel select, list select, image card, suggestion chips, link out chip
-  - SSML
-  - Contexts
-  - Corpus system
+
+- Simple responses
+- Rich responses supported (carousel select, list select, image card, suggestion chips, link out chip
+- SSML
+- Contexts
+- Corpus system
