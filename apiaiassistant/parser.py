@@ -3,6 +3,9 @@ from . import utils
 
 
 def get_parser(request, magic_key=None):
+    if not request:
+        return None
+
     r_magic_key = request.headers.get('magic-key')
     if r_magic_key and magic_key and r_magic_key != magic_key:
         return None

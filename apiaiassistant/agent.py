@@ -10,9 +10,13 @@ class Response(object):
     def __init__(self):
         self.expect_user_response = False
         self._messages = [
-            {"type": 0, "speech": ""}
+            self.initial_message
         ]
         self._contexts = []
+
+    @property
+    def initial_message(self):
+        return {"type": 0, "speech": ""}
 
     def close_mic(self):
         self.expect_user_response = False
@@ -62,7 +66,7 @@ class Agent(object):
 
     def __repr__(self):
         return '<Agent: ({}{})>'.format(
-            self.code,
+            {0: 'OK', 1: 'KO'}.get(self.code, 'KO'),
             '- {}'.format(self.error_message) if self.code != Status.OK else ''
         )
 
@@ -85,13 +89,13 @@ class Agent(object):
         self.response.close_mic()
 
         widget = widgets.SimpleResponseWidget(speech, text, ssml=self._ssml)
-        self.response.add_message(widget.render())
+        self.show(widget)
 
     def ask_raw(self, speech, text=None):
         self.response.open_mic()
 
         widget = widgets.SimpleResponseWidget(speech, text, ssml=self._ssml)
-        self.response.add_message(widget.render())
+        self.show(widget)
 
     def suggest_raw(self, suggestions):
         if type(suggestions) != list:
