@@ -60,7 +60,9 @@ class Agent(object):
         self._ssml = ssml
 
         self.corpus = corpus
-        self.parser = parser.get_parser(request)
+        self.parser = None
+        if request:
+            self.parser = parser.GoogleAssistantParser(request)
 
         self.response = Response()
 

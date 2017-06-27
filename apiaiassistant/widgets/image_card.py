@@ -32,9 +32,3 @@ class ImageCardWidget(GoogleAssistantWidget):
         })
 
         return payload
-
-    def validate(self):
-        if self.image:
-            self.image.validate()
-
-        super(ImageCardWidget, self).validate()

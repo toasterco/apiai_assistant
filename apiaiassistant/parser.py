@@ -2,18 +2,6 @@ import json
 from . import utils
 
 
-def get_parser(request, magic_key=None):
-    if not request:
-        return None
-
-    r_magic_key = request.headers.get('magic-key')
-    if r_magic_key and magic_key and r_magic_key != magic_key:
-        return None
-
-    data = json.loads(request.body)
-    return GoogleAssistantParser(data)
-
-
 class User(object):
     def __init__(self, name, user_id):
         self.name = name
@@ -24,10 +12,14 @@ class PayloadParser(object):
     PARAM_TYPES = utils.enum('NUMBER', 'STRING', 'LIST')
 
     def __init__(self, data):
-        self.data = data
+        self.data = data or {}
         self._user = None
 
-    def get(self, param, _type=None, default=None, globbing=False):
+    @property
+    def is_valid(self):
+        raise NotImplemented
+
+    def get(self, param, default=None, _type=None, globbing=False):
         # Useful for numerated param names (i.e.: give-name, given-name2, etc)
         if globbing:
             value = [
@@ -35,10 +27,10 @@ class PayloadParser(object):
                 for field, _value in self.parameters.items()
                 if field.startswith(param)]
         else:
-            value = self.parameters.get(param)
+            value = self.parameters.get(param, default)
 
         if _type == self.PARAM_TYPES.NUMBER:
-            if isinstance(value, list):
+            if isinstance(value, list) and value:
                 value = map(utils.text_to_int, value)
             else:
                 value = default if not value else utils.text_to_int(value)
@@ -58,6 +50,10 @@ class GoogleAssistantParser(PayloadParser):
         'coarse_loc': 'DEVICE_COARSE_LOCATION',
         'precise_loc': 'DEVICE_PRECISE_LOCATION',
     }
+
+    @property
+    def is_valid(self):
+        return not not self.request
 
     @property
     def action(self):
@@ -108,7 +104,7 @@ class GoogleAssistantParser(PayloadParser):
         user = self.data.get(
             'originalRequest', {}).get('data', {}).get('user', {})
         if user:
-            name = user['userName']
-            user_id = user['userId']
+            name = user.get('userName', name)
+            user_id = user.get('userId', user_id)
 
         return User(name=name, user_id=user_id)

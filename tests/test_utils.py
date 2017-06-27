@@ -22,18 +22,25 @@ class TextToIntTestCase(unittest.TestCase):
         self.assertEqual(utils.text_to_int("first"), 1)
         self.assertEqual(utils.text_to_int("fifth"), 5)
         self.assertEqual(utils.text_to_int("twenty"), 20)
+        self.assertEqual(utils.text_to_int("ten billion"), 10000000000)
+
+    def test_illegal(self):
+        with self.assertRaises(Exception):
+            utils.text_to_int("The human eye can only see at 30fps")
 
 
 class ReadableListTestCase(unittest.TestCase):
     def test_basic(self):
+        self.assertEqual(utils.readable_list(None), "")
+        self.assertEqual(utils.readable_list([]), "")
+        self.assertEqual(utils.readable_list([1]), "1")
+        self.assertEqual(utils.readable_list([1, 2]), "1 and 2")
+        self.assertEqual(utils.readable_list([1, 2, 3]), "1, 2, and 3")
+        self.assertEqual(utils.readable_list([1, 2, 3, 4]), "1, 2, 3, and 4")
         self.assertEqual(
-            utils.readable_list([1]), "1")
-        self.assertEqual(
-            utils.readable_list([1, 2]), "1 and 2")
-        self.assertEqual(
-            utils.readable_list([1, 2, 3]), "1, 2, and 3")
-        self.assertEqual(
-            utils.readable_list([1, 2, 3, 4]), "1, 2, 3, and 4")
+            utils.readable_list([1, 2, 3, 4], liaison='foo'),
+            "1, 2, 3, foo 4"
+        )
 
 
 if __name__ == '__main__':

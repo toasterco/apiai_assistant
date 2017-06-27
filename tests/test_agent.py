@@ -41,6 +41,38 @@ class ResponseTestCase(unittest.TestCase):
         self.assertTrue('data' in payload)
         self.assertTrue('contextOut' in payload)
 
+    def test_add_message(self):
+        r = Response()
+        self.assertEqual(r._messages, [r.initial_message])
+
+        r.add_message({'foo': 'bar'})
+        self.assertEqual(
+            r._messages,
+            [r.initial_message, {'foo': 'bar'}]
+        )
+
+        r.add_message({'bar': 'foo'}, 0)
+        self.assertEqual(
+            r._messages,
+            [{'bar': 'foo'}, r.initial_message, {'foo': 'bar'}]
+        )
+
+    def test_add_context(self):
+        r = Response()
+        self.assertEqual(r._contexts, [])
+
+        r.add_context({'foo': 'bar'})
+        self.assertEqual(
+            r._contexts,
+            [{'foo': 'bar'}]
+        )
+
+        r.add_context({'bar': 'foo'}, 0)
+        self.assertEqual(
+            r._contexts,
+            [{'bar': 'foo'}, {'foo': 'bar'}]
+        )
+
 
 @mock.patch('apiaiassistant.corpus.Corpus.init_corpus', mocked_init_corpus(FAKE_CORPUS))
 class AgentTestCase(unittest.TestCase):
@@ -52,7 +84,7 @@ class AgentTestCase(unittest.TestCase):
     def test_tell(self):
         agent = Agent()
         text = 'foo'
-        agent.tell_raw(text)
+        agent.tell(text)
         payload = agent.response.to_dict()
         self.assertFalse(payload['data']['google']['expectUserResponse'])
         self.assertEqual(len(payload['messages']), 2)
@@ -169,6 +201,27 @@ class AgentTestCase(unittest.TestCase):
                     'suggestions': [
                         {'title': 'Yes'},
                         {'title': 'No'},
+                    ],
+                    'platform': 'google',
+                    'type': 'suggestion_chips'
+
+                }
+            ]
+        )
+
+    def test_suggest_raw_one_suggestion(self):
+        agent = Agent()
+        suggestion = 'Sure'
+        agent.suggest_raw(suggestion)
+        payload = agent.response.to_dict()
+        self.assertEqual(len(payload['messages']), 2)
+        self.assertEqual(
+            payload['messages'],
+            [
+                agent.response.initial_message,
+                {
+                    'suggestions': [
+                        {'title': 'Sure'},
                     ],
                     'platform': 'google',
                     'type': 'suggestion_chips'

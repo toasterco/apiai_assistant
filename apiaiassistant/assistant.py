@@ -32,24 +32,40 @@ class Assistant(object):
         if not agent_instance.parser:
             agent_instance.code = agent.Status.KO
             agent_instance.error_message = 'Could not instantiate parser'
-        print '\n - Action requested: {}'.format(agent_instance.parser.action)
-        print '\n - Available actions: {}'.format(self.action_map.keys())
+            return False
+
+        if not agent_instance.parser.is_valid:
+            agent_instance.code = agent.Status.KO
+            agent_instance.error_message = 'Could not validate data'
+            return False
+
+        print '\n - Actions: {}'.format(self.action_map.keys())
+        print '\n - Action: {}'.format(agent_instance.parser.action)
+
         if not agent_instance.parser.action or agent_instance.parser.action not in self.action_map:
-            self.code = agent.Status.KO
-            self.error_message = 'Could not understand action'
+            agent_instance.code = agent.Status.KO
+            agent_instance.error_message = 'Could not understand action'
+            return False
         print '\n - HTTP Request: {}'.format(agent_instance.parser.data)
         print '\n - API.AI Request: {}'.format(agent_instance.parser.request)
         print '\n - Agent: {} {}'.format(agent_instance.code, agent_instance.error_message)
         print '\n - Valid: {}'.format(agent_instance.code == agent.Status.OK)
 
-        return agent_instance.code == agent.Status.OK
+        return True
 
-    def process(self, request):
+    def process(self, request, headers=None):
         agent_instance = agent.Agent(
             corpus=self.corpus,
             request=request,
             ssml=self._ssml
         )
+
+        if headers:
+            h_magic_key = headers.get('magic-key')
+            if h_magic_key and self.magic_key and h_magic_key != self.magic_key:
+                agent_instance.code = agent.Status.KO
+                agent_instance.error_message = 'Could not verify request'
+                return agent_instance
 
         if self.validate(agent_instance):
             action = self.action_map[agent_instance.parser.action]
