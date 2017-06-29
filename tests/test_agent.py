@@ -5,12 +5,13 @@ from tests import mocked_init_corpus
 
 from apiaiassistant.agent import Response
 from apiaiassistant.agent import Agent
-from apiaiassistant import corpus
+from apiaiassistant.corpus import Corpus
 from apiaiassistant.widgets import LinkOutChipWidget
 
 
 FAKE_CORPUS = {
-    'foo': ['bar']
+    'foo': ['bar'],
+    'confirmation': [['Yes', 'No']]
 }
 
 
@@ -82,9 +83,9 @@ class AgentTestCase(unittest.TestCase):
             str(agent), '<Agent: (OK)>')
 
     def test_tell(self):
-        agent = Agent()
-        text = 'foo'
-        agent.tell(text)
+        agent = Agent(corpus=Corpus('foo.json'))
+        key = 'foo'
+        agent.tell(key)
         payload = agent.response.to_dict()
         self.assertFalse(payload['data']['google']['expectUserResponse'])
         self.assertEqual(len(payload['messages']), 2)
@@ -93,8 +94,8 @@ class AgentTestCase(unittest.TestCase):
             [
                 agent.response.initial_message,
                 {
-                    'displayText': text,
-                    'speech': '<speak>{}</speak>'.format(text),
+                    'displayText': FAKE_CORPUS[key][0],
+                    'speech': '<speak>{}</speak>'.format(FAKE_CORPUS[key][0]),
                     'platform': 'google',
                     'type': 'simple_response'
 
@@ -103,9 +104,9 @@ class AgentTestCase(unittest.TestCase):
         )
 
     def test_ask(self):
-        agent = Agent()
-        text = 'foo'
-        agent.ask(text)
+        agent = Agent(corpus=Corpus('foo.json'))
+        key = 'foo'
+        agent.ask(key)
         payload = agent.response.to_dict()
         self.assertTrue(payload['data']['google']['expectUserResponse'])
         self.assertEqual(len(payload['messages']), 2)
@@ -114,8 +115,8 @@ class AgentTestCase(unittest.TestCase):
             [
                 agent.response.initial_message,
                 {
-                    'displayText': text,
-                    'speech': '<speak>{}</speak>'.format(text),
+                    'displayText': FAKE_CORPUS[key][0],
+                    'speech': '<speak>{}</speak>'.format(FAKE_CORPUS[key][0]),
                     'platform': 'google',
                     'type': 'simple_response'
 
@@ -166,9 +167,9 @@ class AgentTestCase(unittest.TestCase):
         )
 
     def test_suggest(self):
-        agent = Agent()
-        suggestions = ['Yes', 'No']
-        agent.suggest(suggestions)
+        agent = Agent(corpus=Corpus('foo.json'))
+        key = 'confirmation'
+        agent.suggest(key)
         payload = agent.response.to_dict()
         self.assertEqual(len(payload['messages']), 2)
         self.assertEqual(

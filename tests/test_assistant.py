@@ -21,7 +21,7 @@ class AssistantTestCase(unittest.TestCase):
 
         @ass.intent('foo')
         def bar(agent):
-            agent.tell('foobar')
+            agent.tell_raw('foobar')
 
         request = get_dummy_request()
         request['result']['action'] = 'foo'
@@ -44,7 +44,7 @@ class AssistantTestCase(unittest.TestCase):
 
         @ass.intent('foo')
         def bar(agent):
-            agent.tell('foobar')
+            agent.tell_raw('foobar')
 
         request = get_dummy_request()
         request['result']['action'] = 'foo'
