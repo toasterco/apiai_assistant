@@ -1,12 +1,21 @@
+""" API.ai Agent
+
+This module provides a Agent class to be used within an Assistant class
+implementation to be able to interact with the user through the agent """
+
+
 from . import utils
 from . import parser
 from . import widgets
 
 
 Status = utils.enum('OK', 'KO')
+""" :obj:`apiaiassistant.utils.enum`: statuses of the agent """
 
 
 class Response(object):
+    """ Abstraction to build API.ai compatible responses """
+
     def __init__(self):
         self.expect_user_response = False
         self._messages = [
@@ -53,6 +62,15 @@ class Response(object):
 
 
 class Agent(object):
+    """
+    Provides methods to instruct agent on how to respond tu user queries
+
+    Args:
+        corpus (:obj:`apiaiassistant.corpus.Corpus`): Corpus to get the outputs from
+        request (:obj:`dict`, optional): API.ai request
+        ssml (boolean, optional, True): if True, will format speech to support SSML
+    """
+
     def __init__(self, corpus=None, request=None, ssml=True, *args, **kwargs):
         self.code = Status.OK
         self.error_message = None
@@ -72,34 +90,85 @@ class Agent(object):
             '- {}'.format(self.error_message) if self.code != Status.OK else ''
         )
 
-    def tell(self, speech, text=None):
-        # Resolve corpus id here and format or w/e
+    def tell(self, corpus_id, context=None):
+        """
+        Looks for the output id in the corpus and formats with the context
 
-        self.tell_raw(speech, text)
+        Args:
+            corpus_id (str): ID of the output to tell
+            context (:obj:`dict`, optional): context to format the output with
+        """
 
-    def ask(self, speech, text=None):
-        # Resolve corpus id here and format or w/e
+        output = self.corpus[corpus_id]
+        if context is not None:
+            output = output.format(**context)
 
-        self.ask_raw(speech, text)
+        self.tell_raw(output)
 
-    def suggest(self, suggestions):
-        # Resolve corpus id here and format or w/e
+    def ask(self, corpus_id, context=None):
+        """
+        Looks for the output id in the corpus and formats with the context
 
-        self.suggest_raw(suggestions)
+        Args:
+            corpus_id (str): ID of the output to ask
+            context (:obj:`dict`, optional): context to format the output with
+        """
+
+        output = self.corpus[corpus_id]
+        if context is not None:
+            output = output.format(**context)
+
+        self.ask_raw(output)
+
+    def suggest(self, corpus_id):
+        """
+        Looks for the output id in the corpus to suggest
+
+        Args:
+            corpus_id (str): ID of the suggestions to show
+        """
+
+        suggestions = self.corpus[corpus_id]
+
+        if suggestions:
+            self.suggest_raw(suggestions)
 
     def tell_raw(self, speech, text=None):
+        """
+        Tells the user by adding the speech and/or text to the response's messages
+
+        Args:
+            speech (str): speech to tell
+            text (str, optional): text to tell, if None, speech will be used
+        """
+
         self.response.close_mic()
 
         widget = widgets.SimpleResponseWidget(speech, text, ssml=self._ssml)
         self.show(widget)
 
     def ask_raw(self, speech, text=None):
+        """
+        Asks the user by adding the speech and/or text to the response's messages
+
+        Args:
+            speech (str): speech to ask
+            text (str, optional): text to ask, if None, speech will be used
+        """
+
         self.response.open_mic()
 
         widget = widgets.SimpleResponseWidget(speech, text, ssml=self._ssml)
         self.show(widget)
 
     def suggest_raw(self, suggestions):
+        """
+        Suggests the user by adding the suggestions to the response's messages
+
+        Args:
+            suggestions (:obj:`list`): suggestions
+        """
+
         if type(suggestions) != list:
             suggestions = [suggestions]
 
@@ -108,11 +177,24 @@ class Agent(object):
         self.show(suggestion_widget)
 
     def show(self, obj):
+        """
+        Renders a rich response widget and add it to the response's messages
+        """
+
         message = obj.render()
 
         self.response.add_message(message)
 
     def add_context(self, context_name, parameters=None, lifespan=5):
+        """
+        Adds a context to the response's contexts
+
+        Args:
+            context_name (str): name of the context to add
+            parameters (:obj:`dict`, optional): parameters of the context
+            lifespan (:obj:`int`, optional, 5): lifespan of the context
+        """
+
         self.response.add_context({
             "name": context_name,
             "lifespan": lifespan,
