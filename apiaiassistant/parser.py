@@ -1,14 +1,35 @@
-import json
+""" Parser.
+
+Provides Actions on Google Parser classes to read from the API.ai POST
+request payload and offers abstractions to access objects of the payload
+"""
+
+
 from . import utils
 
 
 class User(object):
+    """
+    A simple user class used to encapsulate the user object from the request
+
+    Args:
+        name (str): name of the user
+        user_id (str): uid of the user
+    """
+
     def __init__(self, name, user_id):
         self.name = name
         self.id = user_id
 
 
 class PayloadParser(object):
+    """
+    Base class for all PayloadParser
+
+    Args:
+        data (:obj:`dict`): POST payload from API.ai
+    """
+
     PARAM_TYPES = utils.enum('NUMBER', 'STRING', 'LIST')
 
     def __init__(self, data):
@@ -17,9 +38,33 @@ class PayloadParser(object):
 
     @property
     def is_valid(self):
+        """
+        Validation method, called in apiaiassistant.assistant.Assistant.process
+
+        Returns:
+            bool: True if the parser is valid. False otherwise
+        """
+
         raise NotImplemented
 
     def get(self, param, default=None, _type=None, globbing=False):
+        """
+        General getter to access parameters inside the API.ai request
+
+        Args:
+            param (str): key of the parameter to get
+            default (*, optional, None): default value if the parameter
+                                         couldn't be found
+            _type (:obj:`PARAM_TYPES`, optional): type of the parameter, mostly
+                                                  needed when getting a number
+                                                  parameter
+            globbing (bool, optional, False): if true, will also get all the
+                                              duplicated parameters
+
+        Returns:
+            *: the value of the parameter
+        """
+
         # Useful for numerated param names (i.e.: give-name, given-name2, etc)
         if globbing:
             value = [
@@ -39,6 +84,7 @@ class PayloadParser(object):
 
 
 class GoogleAssistantParser(PayloadParser):
+    """ Parser for the Actions on Google integration """
 
     CAPABILITIES = {
         'screen': 'actions.capability.SCREEN_OUTPUT',
@@ -64,6 +110,15 @@ class GoogleAssistantParser(PayloadParser):
         return self.request.get('parameters', {})
 
     def get_contexts(self, name=None):
+        """ Get the contexts of the request or the context with name `name`
+
+        Args:
+            name (str, optional): name of the context to get
+        Returns:
+            list of contexts if `name` is None, otherwise the context with name
+            `name` or an empty :obj:`dict` if it couldn't be found
+        """
+
         contexts = self.request.get('contexts', [])
         if name:
             for context in contexts:
@@ -88,7 +143,7 @@ class GoogleAssistantParser(PayloadParser):
             return [
                 c['name'] for c in self.data['originalRequest']['data']['surface']['capabilities']
             ]
-        except:
+        except KeyError:
             return []
 
     @property
@@ -98,6 +153,13 @@ class GoogleAssistantParser(PayloadParser):
         return self._user
 
     def _init_user(self):
+        """
+        Initialise the user instance.
+
+        If the user object can't be found in the request it is assumed
+        that we are in a test environment and thus use dummy strings
+        """
+
         name = 'APIAITEST'
         user_id = 'APIAITEST'
 

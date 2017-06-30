@@ -1,3 +1,8 @@
+""" Assistant.
+
+Provides a masterclass for all assistant related needs.
+Instantiate Assistant and use it to register intent and process requests """
+
 import logging
 import functools
 
