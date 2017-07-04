@@ -45,7 +45,7 @@ class PayloadParser(object):
             bool: True if the parser is valid. False otherwise
         """
 
-        raise NotImplemented
+        raise NotImplementedError
 
     def get(self, param, default=None, _type=None, globbing=False):
         """

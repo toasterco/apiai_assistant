@@ -99,14 +99,14 @@ class Agent(object):
     def __repr__(self):
         return '<Agent: ({}{})>'.format(
             Status.by_value.get(self.code),
-            '- {}'.format(self.error_message) if self.code != Status.OK else ''
+            ' - {}'.format(self.error_message) if self.code != Status.OK else ''
         )
 
-    def aobrt(self, reason):
+    def abort(self, reason):
         self.code = Status.Aborted
         self.error_message = reason
 
-        self.response.abort(reason)
+        self.response.abort(self.error_message, self.code)
 
     def error(self, error_message, code=Status.GenericError):
         self.code = code

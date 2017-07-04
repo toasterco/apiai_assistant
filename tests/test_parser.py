@@ -1,8 +1,16 @@
 import unittest
 
+from apiaiassistant.parser import PayloadParser
 from apiaiassistant.parser import GoogleAssistantParser
 
 from tests import get_dummy_request
+
+
+class PayloadParserTestCase(unittest.TestCase):
+    def test_is_valid_not_implemented(self):
+        parser = PayloadParser({})
+        with self.assertRaises(NotImplementedError):
+            parser.is_valid
 
 
 class GoogleAssistantParserTestCase(unittest.TestCase):
