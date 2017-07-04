@@ -17,6 +17,8 @@ class Response(object):
     """ Abstraction to build API.ai compatible responses """
 
     def __init__(self):
+        self.code = Status.OK
+        self.error_message = None
         self.expect_user_response = False
         self._messages = [
             self.initial_message
@@ -26,6 +28,10 @@ class Response(object):
     @property
     def initial_message(self):
         return {"type": 0, "speech": ""}
+
+    def abort(self, error_message):
+        self.code = Status.KO
+        self.error_message = error_message
 
     def close_mic(self):
         self.expect_user_response = False
@@ -46,6 +52,9 @@ class Response(object):
             self._contexts.append(context)
 
     def to_dict(self):
+        if self.code != Status.OK:
+            return {'error': '400'}
+
         payload = {
             'messages': self._messages,
             'data': {
@@ -89,6 +98,12 @@ class Agent(object):
             {0: 'OK', 1: 'KO'}.get(self.code, 'KO'),
             '- {}'.format(self.error_message) if self.code != Status.OK else ''
         )
+
+    def error(self, error_message):
+        self.code = Status.KO
+        self.error_message = error_message
+
+        self.response.abort(error_message)
 
     def tell(self, corpus_id, context=None):
         """

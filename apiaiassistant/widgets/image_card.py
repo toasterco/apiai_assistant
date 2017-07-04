@@ -32,3 +32,4 @@ class ImageCardWidget(GoogleAssistantWidget):
         })
 
         return payload
+
