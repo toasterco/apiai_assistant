@@ -1,3 +1,11 @@
+==========
+Disclaimer
+==========
+
+This README is a work in progress and some links (such as the PyPi links) and shields won't be available until the official release of the ``apiaiassistant`` package.
+
+------------------------------------------
+
 |Logo|
 
 ================
@@ -268,6 +276,7 @@ Contexts are a good way to control the conversation flow, you must create input 
             lifespan (:obj:`int`, optional, 5): lifespan of the context
         """
 
+Read more about contexts `here <https://api.ai/docs/contexts>`__.
 
 Aborting
 ~~~~~~~~
