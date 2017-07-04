@@ -12,7 +12,7 @@ This README is a work in progress and some links (such as the PyPi links) and sh
  apiaiassistant
 ================
 
-|PyPI-Status| |PyPI-Versions|
+|PyPI-Status| |PyPI-Versions| |Branch-Coverage-Status|
 
 |LICENCE|
 
@@ -47,6 +47,19 @@ Pull and install in the current directory:
 .. code:: sh
 
     pip install -e git+https://github.com/toasterco/apiaiassistant.git@master#egg=apiaiassistant
+
+Running tests
+-------------
+
+.. code:: sh
+
+    python -m unittest discover tests/
+
+Or
+
+.. code:: sh
+
+   nosetest --with-coverage --cover-package=apiaiassistant
 
 
 Changelog
@@ -435,16 +448,19 @@ README structure and style based on `tqdm <https://pypi.python.org/pypi/tqdm>`__
 
 |README-Hits| (Since 19 May 2016)
 
-.. |Logo| image:: https://raw.githubusercontent.com/apiaiassistant/apiaiassistant/master/images/logo.gif
+.. |Logo| image:: https://raw.githubusercontent.com/toasterco/apiaiassistant/master/images/logo.gif
 
-.. |GitHub-Status| image:: https://img.shields.io/github/tag/apiaiassistant/apiaiassistant.svg?maxAge=2592000
-   :target: https://github.com/apiaiassistant/apiaiassistant/releases
+.. |Branch-Coverage-Status| image:: https://codecov.io/github/toasterco/apiaiassistant/coverage.svg?branch=master
+   :target: https://codecov.io/github/toasterco/apiaiassistant?branch=master
 
-.. |GitHub-Forks| image:: https://img.shields.io/github/forks/apiaiassistant/apiaiassistant.svg
-   :target: https://github.com/apiaiassistant/apiaiassistant/network
+.. |GitHub-Status| image:: https://img.shields.io/github/tag/toasterco/apiaiassistant.svg?maxAge=2592000
+   :target: https://github.com/toasterco/apiaiassistant/releases
 
-.. |GitHub-Stars| image:: https://img.shields.io/github/stars/apiaiassistant/apiaiassistant.svg
-   :target: https://github.com/apiaiassistant/apiaiassistant/stargazers
+.. |GitHub-Forks| image:: https://img.shields.io/github/forks/toasterco/apiaiassistant.svg
+   :target: https://github.com/toasterco/apiaiassistant/network
+
+.. |GitHub-Stars| image:: https://img.shields.io/github/stars/toasterco/apiaiassistant.svg
+   :target: https://github.com/toasterco/apiaiassistant/stargazers
 
 .. |PyPI-Status| image:: https://img.shields.io/pypi/v/apiaiassistant.svg
    :target: https://pypi.python.org/pypi/apiaiassistant
@@ -456,7 +472,7 @@ README structure and style based on `tqdm <https://pypi.python.org/pypi/tqdm>`__
    :target: https://pypi.python.org/pypi/apiaiassistant
 
 .. |LICENCE| image:: https://img.shields.io/pypi/l/apiaiassistant.svg
-   :target: https://raw.githubusercontent.com/apiaiassistant/apiaiassistant/master/LICENCE
+   :target: https://raw.githubusercontent.com/toasterco/apiaiassistant/master/LICENCE
 
 .. |README-Hits| image::
    :target:
