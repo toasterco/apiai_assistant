@@ -103,11 +103,11 @@ Writing intents
 Accessing parameters
 ~~~~~~~~~~~~~~~~~~~~
 
-Each agent instance has a ``parser`` attribute that is an instance of superclassed ``apiaiassistant.parser.PayloadParser``
+Each agent instance has a ``parser`` attribute that is an instance of the superclassed ``apiaiassistant.parser.PayloadParser``
 
 Using ``parser.get`` you can retrieve parameters for your intent and even parse numbers by specifying the type of the parameter to get
 
-Parsing numbers turn the received string in the request payload to a python ``int`` object (i.e.: '3rd', 'three', and 'third' will be converted to ``3``)
+Parsing numbers turns the received string in the request payload to a python ``int`` object (i.e.: '3rd', 'three', and 'third' will be converted to ``3``)
 
 .. code:: python
 
@@ -122,7 +122,7 @@ Accessing context parameters
 
 Use the agent instances to retrieve the parameters of a context by passing the name of the context to the ``get_contexts`` method of the agent instance.
 
-If the context was found in the request, the parameters of it will be returned in a ``dict`` as they are received from API.ai
+If the context was found in the request, its parameters will be returned in a ``dict`` as they are received from API.ai
 
 .. code:: python
 
@@ -143,7 +143,7 @@ To retrieve the list of all contexts as they are in the request payload
 Telling the user
 ~~~~~~~~~~~~~~~~
 
-To have your agent respond something and close the device's mic, you can use the ``tell`` and ``tell_raw`` methods of the agent instance.
+To have your agent answer the user's query and close the device's mic, you can use the ``tell`` and ``tell_raw`` methods of the agent instance.
 
 .. code:: python
 
@@ -172,7 +172,7 @@ To have your agent respond something and close the device's mic, you can use the
 Asking the user
 ~~~~~~~~~~~~~~~
 
-To have your agent ask something to the user and wait for an answer, you can use the ``ask`` and ``ask_raw`` methods of the agent instance.
+To have your agent asks the user something and wait for an answer, you can use the ``ask`` and ``ask_raw`` methods of the agent instance.
 
 .. code:: python
 
@@ -295,7 +295,7 @@ Writing a corpus
 
 A corpus is a large and structured set of texts, in the contexts of ``apiaiassistant``, corpora are JSON files containing all outputs of your agent.
 
-When rendering an output via ``.tell()``, ``.ask()``, or ``.suggest()``, the agent lookups the output id within the corpus and **randomly selects a choice from the list value for that output id**, thus making your agent responses less predictable and more organic.
+When rendering an output via ``.tell()``, ``.ask()``, or ``.suggest()``, the agent looks up the output id within the corpus and **randomly selects a choice from the list value for that output id**, thus making your agent responses less predictable and more organic.
 
 Your corpus must contain only one object and the value for each key must be a list of strings or list of jsonified tuples (unless it's a suggestion output, see `Suggesting options to the user <#suggesting-options-to-the-user>`__.
 
@@ -304,7 +304,7 @@ When having a list of string as the value, the text output will be the same as t
 When having a list of jsonified tuples as the value, the speech output will be the first element and the text will be the second.
 
 
-Below are shown the required structures
+Shown below are the required structures
 
 .. code:: javascript
 
@@ -334,7 +334,7 @@ Or
 Processing a request
 ---------------------
 
-In your webhook, when receiving the POST request from API.ai, simply pass the POST payload as a python ``dict`` to the assistant.
+In your webhook, when receiving the POST request from API.ai, simply pass the POST payload as a ``dict`` to the assistant.
 
 .. code:: python
 
@@ -343,7 +343,7 @@ In your webhook, when receiving the POST request from API.ai, simply pass the PO
     agent = myassistant.process(payload)
 
 
-If you specified a magic key when declaring your assistant, you can also pass the HTTP headers of the received request, as a python ``dict``, to verify the request's source.
+If you specified a magic key when declaring your assistant, you can also pass the HTTP headers of the received request, as a ``dict``, to verify the request's source.
 
 .. code:: python
 
@@ -359,7 +359,7 @@ Responding to the POST request
 
 Processing a request through an ``assistant`` returns an ``apiaiassistant.agent.Agent`` instance of which you can simply render the ``response`` attribute.
 
-If something went wrong during the intent execution, the ``code`` attribute of the agent instance will be set to ``apiaiassistant.agent.Status.KO`` and the ``error_message`` attribute will describe what went wrong.
+If something went wrong during the intent execution, the ``code`` attribute of the agent instance will be set to one of the error statuses (see ``apiaiassistant.agent.Status``) and the ``error_message`` attribute will describe what went wrong.
 
 The ``response`` attribute will also be appropriately set with the API.ai error format so you can render the response regardless of the agent status code.
 
