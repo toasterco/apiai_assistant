@@ -69,11 +69,13 @@ class Assistant(object):
         """
 
         if not agent_instance.parser:
-            agent_instance.error('Could not instantiate parser')
+            agent_instance.error('Could not instantiate parser',
+                                 code=agent.Status.InvalidData)
             return False
 
         if not agent_instance.parser.is_valid:
-            agent_instance.error('Could not validate data')
+            agent_instance.error('Could not validate data',
+                                 code=agent.Status.InvalidData)
             return False
 
         logging.debug("""
@@ -84,7 +86,8 @@ class Assistant(object):
 
         if (not agent_instance.parser.action
            or agent_instance.parser.action not in self.action_map):
-            agent_instance.error('Could not understand action')
+            agent_instance.error('Could not understand action',
+                                 code=agent.Status.InvalidData)
             return False
 
         logging.debug("""
@@ -121,7 +124,8 @@ class Assistant(object):
         if headers:
             h_magic_key = headers.get('magic-key')
             if h_magic_key and self.magic_key and h_magic_key != self.magic_key:
-                agent_instance.error('Could not verify request')
+                agent_instance.error('Could not verify request',
+                                     code=agent.Status.AccessDenied)
                 return agent_instance
 
         if self.validate(agent_instance):

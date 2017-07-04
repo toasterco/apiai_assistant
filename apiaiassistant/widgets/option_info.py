@@ -13,6 +13,6 @@ class OptionInfo(GoogleAssistantWidget):
 
     def render(self):
         return {
-            "key": self.key,
-            "synonyms": self.synonyms
+            'key': self.key,
+            'synonyms': self.synonyms
         }

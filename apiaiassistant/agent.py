@@ -9,7 +9,10 @@ from . import parser
 from . import widgets
 
 
-Status = utils.enum('OK', 'KO')
+Status = utils.enum(
+    'OK',
+    'GenericError', 'InvalidData', 'NotImplemented',
+    'Aborted', 'AccessDenied')
 """ :obj:`apiaiassistant.utils.enum`: statuses of the agent """
 
 
@@ -27,10 +30,10 @@ class Response(object):
 
     @property
     def initial_message(self):
-        return {"type": 0, "speech": ""}
+        return {'type': 0, 'speech': ''}
 
-    def abort(self, error_message):
-        self.code = Status.KO
+    def abort(self, error_message, code=Status.GenericError):
+        self.code = code
         self.error_message = error_message
 
     def close_mic(self):
@@ -95,12 +98,18 @@ class Agent(object):
 
     def __repr__(self):
         return '<Agent: ({}{})>'.format(
-            {0: 'OK', 1: 'KO'}.get(self.code, 'KO'),
+            Status.by_value.get(self.code),
             '- {}'.format(self.error_message) if self.code != Status.OK else ''
         )
 
-    def error(self, error_message):
-        self.code = Status.KO
+    def aobrt(self, reason):
+        self.code = Status.Aborted
+        self.error_message = reason
+
+        self.response.abort(reason)
+
+    def error(self, error_message, code=Status.GenericError):
+        self.code = code
         self.error_message = error_message
 
         self.response.abort(error_message)
@@ -211,7 +220,7 @@ class Agent(object):
         """
 
         self.response.add_context({
-            "name": context_name,
-            "lifespan": lifespan,
-            "parameters": parameters or {}
+            'name': context_name,
+            'lifespan': lifespan,
+            'parameters': parameters or {}
         })

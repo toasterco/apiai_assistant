@@ -11,7 +11,7 @@ class SimpleResponseWidget(GoogleAssistantWidget):
             raise InvalidGoogleAssistantWidget(
                 'Please at least specify text or speech')
 
-        self.type = "simple_response"
+        self.type = 'simple_response'
         self._ssml = ssml
 
         super(SimpleResponseWidget, self).__init__()
@@ -23,9 +23,9 @@ class SimpleResponseWidget(GoogleAssistantWidget):
         payload = super(SimpleResponseWidget, self).render()
 
         payload.update({
-            "type": self.type,
-            "displayText": self.text,
-            "speech": self.ssml_format(self.speech) if self._ssml else self.speech
+            'type': self.type,
+            'displayText': self.text,
+            'speech': self.ssml_format(self.speech) if self._ssml else self.speech
         })
 
         return payload
