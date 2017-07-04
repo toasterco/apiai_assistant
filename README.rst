@@ -409,18 +409,15 @@ file for more information.
 LICENCE
 =======
 
-Open Source (OSI approved): |LICENCE|
-
-Citation information: |DOI-URI|
-
+Open Source : |LICENCE|
 
 Authors
 =======
 
 Ranked by contributions.
 
--  Zack Dibe *
--  Dominic Santos
+-  Zack Dibe (Zack--) *
+-  Dominic Santos (dominicglenn)
 
 
 README structure and style based on `tqdm <https://pypi.python.org/pypi/tqdm>`__.
@@ -430,7 +427,6 @@ README structure and style based on `tqdm <https://pypi.python.org/pypi/tqdm>`__
 |README-Hits| (Since 19 May 2016)
 
 .. |Logo| image:: https://raw.githubusercontent.com/apiaiassistant/apiaiassistant/master/images/logo.gif
-
 
 .. |GitHub-Status| image:: https://img.shields.io/github/tag/apiaiassistant/apiaiassistant.svg?maxAge=2592000
    :target: https://github.com/apiaiassistant/apiaiassistant/releases
@@ -450,20 +446,8 @@ README structure and style based on `tqdm <https://pypi.python.org/pypi/tqdm>`__
 .. |PyPI-Versions| image:: https://img.shields.io/pypi/pyversions/apiaiassistant.svg
    :target: https://pypi.python.org/pypi/apiaiassistant
 
-.. |Conda-Forge-Status| image:: https://anaconda.org/conda-forge/apiaiassistant/badges/version.svg
-   :target: https://anaconda.org/conda-forge/apiaiassistant
-
 .. |LICENCE| image:: https://img.shields.io/pypi/l/apiaiassistant.svg
    :target: https://raw.githubusercontent.com/apiaiassistant/apiaiassistant/master/LICENCE
 
-.. |DOI-URI| image:: https://zenodo.org/badge/21637/apiaiassistant/apiaiassistant.svg
-   :target: https://zenodo.org/badge/latestdoi/21637/apiaiassistant/apiaiassistant
-
-.. |Screenshot-Jupyter1| image:: https://raw.githubusercontent.com/apiaiassistant/apiaiassistant/master/images/apiaiassistant-jupyter-1.gif
-
-.. |Screenshot-Jupyter2| image:: https://raw.githubusercontent.com/apiaiassistant/apiaiassistant/master/images/apiaiassistant-jupyter-2.gif
-
-.. |Screenshot-Jupyter3| image:: https://raw.githubusercontent.com/apiaiassistant/apiaiassistant/master/images/apiaiassistant-jupyter-3.gif
-
-.. |README-Hits| image:: https://caspersci.uk.to/cgi-bin/hits.cgi?q=apiaiassistant&style=social&r=https://github.com/apiaiassistant/apiaiassistant&l=https://caspersci.uk.to/images/apiaiassistant.png&f=https://raw.githubusercontent.com/apiaiassistant/apiaiassistant/master/images/logo.gif
-   :target: https://caspersci.uk.to/cgi-bin/hits.cgi?q=apiaiassistant&a=plot&r=https://github.com/apiaiassistant/apiaiassistant&l=https://caspersci.uk.to/images/apiaiassistant.png&f=https://raw.githubusercontent.com/apiaiassistant/apiaiassistant/master/images/logo.gif&style=social
+.. |README-Hits| image::
+   :target:
