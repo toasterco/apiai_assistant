@@ -415,47 +415,47 @@ To do
 Documentation
 =============
 
-* `Assistant <documentation/assistant.rst#Assistant>`__
+* `Assistant <documentation/assistant.rst#assistant>`__
 
-* `Agent <documentation/agent.rst#Agent>`__
+* `Agent <documentation/agent.rst#agent>`__
 
-  * `Response <documentation/agent.rst#Response>`__
+  * `Response <documentation/agent.rst#response>`__
 
-* `Corpus <documentation/corpus.rst#Corpus>`__
+* `Corpus <documentation/corpus.rst#corpus>`__
 
 * `Utils <documentation/utils.rst>`__
 
 * `Parser <documentation/parser.rst>`__
 
-  * `PayloadParser <documentation/parser.rst#PayloadParser>`__
+  * `PayloadParser <documentation/parser.rst#payloadparser>`__
 
-  * `GoogleAssistantPayloadParser <documentation/parser.rst#GoogleAssistantPayloadParser>`__
+  * `GoogleAssistantPayloadParser <documentation/parser.rst#googleassistantpayloadparser>`__
 
-* `Widgets <documentation/widgets.rst>`__
+* `widgets <documentation/widgets.rst>`__
 
-  * `GoogleAssistantWidget <documentation/widgets.rst#GoogleAssistantWidget>`__
+  * `GoogleAssistantWidget <documentation/widgets.rst#googleassistantwidget>`__
 
-  * `InvalidGoogleAssistantWidget <documentation/widgets.rst#InvalidGoogleAssistantWidget>`__
+  * `InvalidGoogleAssistantWidget <documentation/widgets.rst#invalidgoogleassistantwidget>`__
 
-  * `ListSelectWidget <documentation/widgets.rst#ListSelectWidget>`__
+  * `ListSelectWidget <documentation/widgets.rst#listselectwidget>`__
 
-  * `CarouselSelectWidget <documentation/widgets.rst#CarouselSelectWidget>`__
+  * `CarouselSelectWidget <documentation/widgets.rst#carouselselectwidget>`__
 
-  * `ImageCardWidget <documentation/widgets.rst#ImageCardWidget>`__
+  * `ImageCardWidget <documentation/widgets.rst#imagecardwidget>`__
 
-  * `LinkOutChipWidget <documentation/widgets.rst#LinkOutChipWidget>`__
+  * `LinkOutChipWidget <documentation/widgets.rst#linkoutchipwidget>`__
 
-  * `SimpleRsponseWidget <documentation/widgets.rst#SimpleRsponseWidget>`__
+  * `SimpleResponseWidget <documentation/widgets.rst#simpleresponsewidget>`__
 
-  * `SuggestionsWidget <documentation/widgets.rst#SuggestionsWidget>`__
+  * `SuggestionsWidget <documentation/widgets.rst#suggestionswidget>`__
 
-  * :ref:`image-label`
+  * `Image <documentation/widgets.rst#image>`__
 
-  * `Button <documentation/widgets.rst#Button>`__
+  * `Button <documentation/widgets.rst#button>`__
 
-  * `OptionInfo <documentation/widgets.rst#OptionInfo>`__
+  * `OptionInfo <documentation/widgets.rst#optioninfo>`__
 
-  * `SelectItem <documentation/widgets.rst#SelectItem>`__
+  * `SelectItem <documentation/widgets.rst#selectitem>`__
 
 Contributions
 =============

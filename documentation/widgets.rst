@@ -26,7 +26,6 @@ SimpleRsponseWidget
 SuggestionsWidget
 =================
 
-.. _image-label:
 Image
 =====
 
