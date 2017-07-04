@@ -433,7 +433,7 @@ Documentation
 
 * `Widgets <documentation/widgets.rst>`__
 
-  * `GoogleAssistantWidget <documentation/widget.rst#GoogleAssistantWidget>`__
+  * `GoogleAssistantWidget <documentation/widgets.rst#GoogleAssistantWidget>`__
 
   * `InvalidGoogleAssistantWidget <documentation/widgets.rst#InvalidGoogleAssistantWidget>`__
 
