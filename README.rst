@@ -415,13 +415,13 @@ To do
 Documentation
 =============
 
-* `Assistant <documentation/assistant.rst>`__
+* `Assistant <documentation/assistant.rst#Assistant>`__
 
-* `Agent <documentation/agent.rst>`__
+* `Agent <documentation/agent.rst#Agent>`__
 
   * `Response <documentation/agent.rst#Response>`__
 
-* `Corpus <documentation/corpus.rst>`__
+* `Corpus <documentation/corpus.rst#Corpus>`__
 
 * `Utils <documentation/utils.rst>`__
 
@@ -433,7 +433,7 @@ Documentation
 
 * `Widgets <documentation/widgets.rst>`__
 
-  * `GoogleAssistantWidget <documentation/googleassistantwidget.rst>`__
+  * `GoogleAssistantWidget <documentation/widget.rst#GoogleAssistantWidget>`__
 
   * `InvalidGoogleAssistantWidget <documentation/widgets.rst#InvalidGoogleAssistantWidget>`__
 
@@ -449,7 +449,7 @@ Documentation
 
   * `SuggestionsWidget <documentation/widgets.rst#SuggestionsWidget>`__
 
-  * `Image <documentation/widgets.rst#Image>`__
+  * :ref:`image-label`
 
   * `Button <documentation/widgets.rst#Button>`__
 
