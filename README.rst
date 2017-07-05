@@ -385,9 +385,6 @@ The ``response`` attribute will also be appropriately set with the API.ai error 
 FAQ and Known Issues
 ====================
 
-The most common issues relate to excessive output on multiple lines, instead
-of a neat one-line progress bar.
-
 - How can I get the user's location or name?
 
   ``Unfortunately, permissions aren't supported as of yet in Alpha``
@@ -411,6 +408,9 @@ To do
 - Support permission requests
 
 - Assist account linking
+
+- Support API.ai sandbox mode
+
 
 Documentation
 =============
