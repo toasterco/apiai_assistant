@@ -70,6 +70,11 @@ The list of all changes is available either on GitHub's Releases:
 `allmychanges.com <https://allmychanges.com/p/python/apiaiassistant/>`_.
 
 
+Sample Usage
+============
+
+See the `apiaiassistant-sample <https://github.com/toasterco/apiaiassistant-sample>`__ project.
+
 Usage
 =====
 
