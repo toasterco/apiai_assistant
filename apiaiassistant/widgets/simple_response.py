@@ -4,8 +4,10 @@ from . import InvalidGoogleAssistantWidget
 
 class SimpleResponseWidget(GoogleAssistantWidget):
     def __init__(self, speech, text, ssml=True):
-        self.speech = speech or text
-        self.text = text or speech
+        self.speech = speech
+        self.text = text
+        if text is None:
+            self.text = speech
 
         if speech is None and text is None:
             raise InvalidGoogleAssistantWidget(

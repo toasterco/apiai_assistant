@@ -50,19 +50,6 @@ class SimpleResponseWidgetTestCase(unittest.TestCase):
             }
         )
 
-    def test_speech(self):
-        text = "bar"
-        w = SimpleResponseWidget(None, text)
-        self.assertEqual(
-            w.render(),
-            {
-                "platform": "google",
-                "type": "simple_response",
-                "displayText": text,
-                "speech": w.ssml_format(text)
-            }
-        )
-
 
 if __name__ == '__main__':
     unittest.main()
