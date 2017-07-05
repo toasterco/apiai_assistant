@@ -101,6 +101,9 @@ No parameters are required to declare an ``Assistant`` but it is highly recommen
         magic_key=MY_MAGIC_KEY)
 
 
+`Example <https://github.com/toasterco/apiaiassistant-sample/blob/master/agent/__init__.py#L5>`__
+
+
 Registering an intent
 ---------------------
 
@@ -115,8 +118,12 @@ Each intent takes an ``apiaiassistant.agent.Agent`` instance as parameter
         ...
 
 
+`Example <https://github.com/toasterco/apiaiassistant-sample/blob/master/agent/actions/start.py#L5>`__
+
 Writing intents
 ---------------
+
+`Example <https://github.com/toasterco/apiaiassistant-sample/blob/master/agent/actions/animal_info.py#L24>`__
 
 Accessing parameters
 ~~~~~~~~~~~~~~~~~~~~
@@ -349,6 +356,8 @@ Or
     }
 
 
+`Example <https://github.com/toasterco/apiaiassistant-sample/blob/master/corpora/animal_wiki_corpus.json>`__
+
 Processing a request
 ---------------------
 
@@ -371,6 +380,7 @@ If you specified a magic key when declaring your assistant, you can also pass th
         payload,
         headers=self.request.headers)
 
+`Example <https://github.com/toasterco/apiaiassistant-sample/blob/master/handlers/assistant_webhook.py#L16>`__
 
 Responding to the POST request
 ------------------------------
