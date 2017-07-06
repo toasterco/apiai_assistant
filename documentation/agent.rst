@@ -25,6 +25,8 @@ Agent Object
 
 *class* ``agent``. **Agent**\([*corpus* [, *request* [, *ssml=True*])
 
+  Provides methods to instruct the agent on how to respond tu user queries.
+
   *corpus* must be a `corpus.Corpus <corpus.rst#corpus>`_ instance
 
   *request* is the API.ai POST request as a ``dict``
@@ -103,6 +105,8 @@ Response Object
 .. _response:
 
 *class* ``agent``. **Response**
+
+  Abstraction to build API.ai compatible responses.
 
   The `Response`_ class supports the following methods:
 

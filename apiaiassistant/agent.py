@@ -75,7 +75,7 @@ class Response(object):
 
 class Agent(object):
     """
-    Provides methods to instruct agent on how to respond tu user queries
+    Provides methods to instruct the agent on how to respond tu user queries
 
     Args:
         corpus (:obj:`apiaiassistant.corpus.Corpus`): Corpus to get the outputs from

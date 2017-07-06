@@ -9,6 +9,8 @@ Corpus Object
 
 *class* ``corpus``. **Corpus** (*filepath*)
 
+  Used to managed and access a JSON filed that holds the outputs of an API.ai agent.
+
   *filepath* is a path to a JSON file as a ``string``.
 
   The `Corpus`_ class supports the following methods and attributes:

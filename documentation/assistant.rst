@@ -9,6 +9,8 @@ Assistant Object
 
 *class* ``assistant``. **Assistant**\([*ssml=True* [, *corpus* [, *magic_key*])
 
+  Entrypoint for the apiaiassistant package. The Assistant class manages the different intents of the agent and processes the requests.
+
   *ssml* is a flag to enable or disable the formatting of speech messages to enable `Speech Synthesis Markup Language <https://developers.google.com/actions/reference/ssml>`_
 
   *corpus* is a path to a JSON file as a ``string``.

@@ -2,6 +2,8 @@
  Utils module
 ==============
 
+Provides utility functions for the modules of the apiaiassistant package.
+
 Module Contents
 ===============
 
