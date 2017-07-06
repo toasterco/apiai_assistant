@@ -46,7 +46,6 @@ Module Contents
 
 .. code:: python
 
-  >>> names = ['Zack', 'Jonny', 'Lisa']
   >>> readable_list(['Zack'])
   'Zack'
   >>> readable_list(['Zack', 'Jonny'])
