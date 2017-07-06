@@ -121,7 +121,7 @@ class Assistant(object):
             ssml=self._ssml
         )
 
-        if headers:
+        if headers and type(headers) is dict:
             h_magic_key = headers.get('magic-key')
             if h_magic_key and self.magic_key and h_magic_key != self.magic_key:
                 agent_instance.error('Could not verify request',

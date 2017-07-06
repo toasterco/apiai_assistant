@@ -29,6 +29,8 @@ Agent Object
 
   *request* is the API.ai POST request as a ``dict``
 
+  *ssml* is a flag to enable or disable the formatting of speech messages to enable `Speech Synthesis Markup Language <https://developers.google.com/actions/reference/ssml>`_
+
   The `Agent`_ class supports the following methods and attributes:
 
   **abort**\(*reason*)
