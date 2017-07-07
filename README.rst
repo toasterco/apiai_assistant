@@ -454,25 +454,25 @@ Documentation
 
   * `GoogleAssistantWidget <documentation/widgets.rst#googleassistantwidget>`__
 
-  * `ListSelectWidget <documentation/widgets.rst#listselectwidget>`__
-
-  * `CarouselSelectWidget <documentation/widgets.rst#carouselselectwidget>`__
-
-  * `ImageCardWidget <documentation/widgets.rst#imagecardwidget>`__
-
-  * `LinkOutChipWidget <documentation/widgets.rst#linkoutchipwidget>`__
-
   * `SimpleResponseWidget <documentation/widgets.rst#simpleresponsewidget>`__
 
   * `SuggestionsWidget <documentation/widgets.rst#suggestionswidget>`__
+
+  * `LinkOutChipWidget <documentation/widgets.rst#linkoutchipwidget>`__
+
+  * `ImageCardWidget <documentation/widgets.rst#imagecardwidget>`__
 
   * `Image <documentation/widgets.rst#image>`__
 
   * `Button <documentation/widgets.rst#button>`__
 
-  * `OptionInfo <documentation/widgets.rst#optioninfo>`__
+  * `ListSelectWidget <documentation/widgets.rst#listselectwidget>`__
+
+  * `CarouselSelectWidget <documentation/widgets.rst#carouselselectwidget>`__
 
   * `SelectItem <documentation/widgets.rst#selectitem>`__
+
+  * `OptionInfo <documentation/widgets.rst#optioninfo>`__
 
 Contributions
 =============
