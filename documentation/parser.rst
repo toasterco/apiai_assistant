@@ -51,6 +51,8 @@ PayloadParser Object
   **is_valid**
     Validation property that must be implemented to validate the parser and data.
 
+  The following is defined as clas-level attribute of `PaylaodParser`:
+
   **PARAM_TYPES**
     `utils.Enum <utils.rst#enum>`_ object of keys `NUMBER`, `STRING`, and `LIST`
 

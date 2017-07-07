@@ -442,15 +442,17 @@ Documentation
 
 * `Parser <documentation/parser.rst>`__
 
+  * `User <documentation/parser.rst#user>`__
+
   * `PayloadParser <documentation/parser.rst#payloadparser>`__
 
   * `GoogleAssistantPayloadParser <documentation/parser.rst#googleassistantpayloadparser>`__
 
 * `widgets <documentation/widgets.rst>`__
 
-  * `GoogleAssistantWidget <documentation/widgets.rst#googleassistantwidget>`__
+  * `InvalidGoogleAssistantWidget <documentation/widgets.rst#InvalidGoogleAssistantWidget>`__
 
-  * `InvalidGoogleAssistantWidget <documentation/widgets.rst#invalidgoogleassistantwidget>`__
+  * `GoogleAssistantWidget <documentation/widgets.rst#googleassistantwidget>`__
 
   * `ListSelectWidget <documentation/widgets.rst#listselectwidget>`__
 
