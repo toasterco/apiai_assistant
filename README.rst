@@ -59,7 +59,7 @@ Or
 
 .. code:: sh
 
-   nosetest --with-coverage --cover-package=apiaiassistant
+   nosetests --with-coverage --cover-package=apiaiassistant
 
 
 Changelog
@@ -503,8 +503,6 @@ README structure and style based on `tqdm <https://pypi.python.org/pypi/tqdm>`__
 
 `*` Original author
 
-|README-Hits| (Since 19 May 2016)
-
 .. |Logo| image:: https://raw.githubusercontent.com/toasterco/apiaiassistant/master/images/logo.gif
 
 .. |Branch-Coverage-Status| image:: https://codecov.io/github/toasterco/apiaiassistant/coverage.svg?branch=master
@@ -530,6 +528,3 @@ README structure and style based on `tqdm <https://pypi.python.org/pypi/tqdm>`__
 
 .. |LICENCE| image:: https://img.shields.io/pypi/l/apiaiassistant.svg
    :target: https://raw.githubusercontent.com/toasterco/apiaiassistant/master/LICENCE
-
-.. |README-Hits| image::
-   :target:
