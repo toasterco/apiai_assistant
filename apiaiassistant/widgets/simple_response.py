@@ -27,7 +27,7 @@ class SimpleResponseWidget(GoogleAssistantWidget):
         payload.update({
             'type': self.type,
             'displayText': self.text,
-            'speech': self.ssml_format(self.speech) if self._ssml else self.speech
+            'textToSpeech': self.ssml_format(self.speech) if self._ssml else self.speech
         })
 
         return payload

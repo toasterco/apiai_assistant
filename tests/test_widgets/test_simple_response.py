@@ -15,7 +15,7 @@ class SimpleResponseWidgetTestCase(unittest.TestCase):
                 "platform": "google",
                 "type": "simple_response",
                 "displayText": text,
-                "speech": w.ssml_format(speech)
+                "textToSpeech": w.ssml_format(speech)
             }
         )
 
@@ -29,7 +29,7 @@ class SimpleResponseWidgetTestCase(unittest.TestCase):
                 "platform": "google",
                 "type": "simple_response",
                 "displayText": text,
-                "speech": speech
+                "textToSpeech": speech
             }
         )
 
@@ -46,7 +46,7 @@ class SimpleResponseWidgetTestCase(unittest.TestCase):
                 "platform": "google",
                 "type": "simple_response",
                 "displayText": speech,
-                "speech": w.ssml_format(speech)
+                "textToSpeech": w.ssml_format(speech)
             }
         )
 

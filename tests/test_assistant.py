@@ -32,7 +32,7 @@ class AssistantTestCase(unittest.TestCase):
             [
                 agent.response.initial_message,
                 {'platform': 'google',
-                 'speech': '<speak>foobar</speak>',
+                 'textToSpeech': '<speak>foobar</speak>',
                  'displayText': 'foobar',
                  'type': 'simple_response'}
             ]
@@ -61,7 +61,7 @@ class AssistantTestCase(unittest.TestCase):
             [
                 agent.response.initial_message,
                 {'platform': 'google',
-                 'speech': '<speak>foobar</speak>',
+                 'textToSpeech': '<speak>foobar</speak>',
                  'displayText': 'foobar',
                  'type': 'simple_response'}
             ]
