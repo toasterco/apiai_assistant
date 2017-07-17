@@ -504,6 +504,9 @@ README structure and style based on `tqdm <https://pypi.python.org/pypi/tqdm>`__
 `*` Original author
 
 .. |Logo| image:: https://raw.githubusercontent.com/toasterco/apiaiassistant/master/images/apiaiassistant-logo.png
+   :height: 180px
+   :width: 180 px
+   :alt: apiaiassistant logo
 
 .. |Branch-Coverage-Status| image:: https://codecov.io/github/toasterco/apiaiassistant/coverage.svg?branch=master
    :target: https://codecov.io/github/toasterco/apiaiassistant?branch=master
