@@ -15,11 +15,11 @@ class SimpleResponseWidgetTestCase(unittest.TestCase):
                 "platform": "google",
                 "type": "simple_response",
                 "displayText": text,
-                "textToSpeech": w.ssml_format(speech)
+                "ssml": w.ssml_format(speech)
             }
         )
 
-    def test_basic_ssml(self):
+    def test_basic_no_ssml(self):
         speech = "foo"
         text = "bar"
         w = SimpleResponseWidget(speech, text, ssml=False)
@@ -46,7 +46,7 @@ class SimpleResponseWidgetTestCase(unittest.TestCase):
                 "platform": "google",
                 "type": "simple_response",
                 "displayText": speech,
-                "textToSpeech": w.ssml_format(speech)
+                "ssml": w.ssml_format(speech)
             }
         )
 

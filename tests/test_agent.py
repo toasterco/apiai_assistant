@@ -124,7 +124,7 @@ class AgentTestCase(unittest.TestCase):
                 agent.response.initial_message,
                 {
                     'displayText': FAKE_CORPUS[key][0],
-                    'textToSpeech': '<speak>{}</speak>'.format(
+                    'ssml': '<speak>{}</speak>'.format(
                         FAKE_CORPUS[key][0].format(context)),
                     'platform': 'google',
                     'type': 'simple_response'
@@ -147,7 +147,7 @@ class AgentTestCase(unittest.TestCase):
                 agent.response.initial_message,
                 {
                     'displayText': FAKE_CORPUS[key][0],
-                    'textToSpeech': '<speak>{}</speak>'.format(
+                    'ssml': '<speak>{}</speak>'.format(
                         FAKE_CORPUS[key][0].format(context)),
                     'platform': 'google',
                     'type': 'simple_response'
@@ -169,7 +169,7 @@ class AgentTestCase(unittest.TestCase):
                 agent.response.initial_message,
                 {
                     'displayText': text,
-                    'textToSpeech': '<speak>{}</speak>'.format(text),
+                    'ssml': '<speak>{}</speak>'.format(text),
                     'platform': 'google',
                     'type': 'simple_response'
 
@@ -190,7 +190,7 @@ class AgentTestCase(unittest.TestCase):
                 agent.response.initial_message,
                 {
                     'displayText': text,
-                    'textToSpeech': '<speak>{}</speak>'.format(text),
+                    'ssml': '<speak>{}</speak>'.format(text),
                     'platform': 'google',
                     'type': 'simple_response'
 
