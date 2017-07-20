@@ -17,9 +17,15 @@ class User(object):
         user_id (str): uid of the user
     """
 
-    def __init__(self, name, user_id):
-        self.name = name
+    def __init__(
+            self,
+            display_name=None, given_name=None, family_name=None,
+            user_id=None, location=None):
+        self.display_name = display_name
         self.id = user_id
+        self.given_name = given_name
+        self.family_name = family_name
+        self.location = location
 
 
 class PayloadParser(object):
@@ -160,13 +166,16 @@ class GoogleAssistantParser(PayloadParser):
         that we are in a test environment and thus use dummy strings
         """
 
-        name = 'APIAITEST'
         user_id = 'APIAITEST'
+        display_name = None
+        given_name = None
+        family_name = None
 
         user = self.data.get(
             'originalRequest', {}).get('data', {}).get('user', {})
-        if user:
-            name = user.get('userName', name)
-            user_id = user.get('userId', user_id)
 
-        return User(name=name, user_id=user_id)
+        return User(
+            display_name=user.get('profile', {}).get('displayName', display_name),
+            given_name=user.get('profile', {}).get('givenName', given_name),
+            family_name=user.get('profile', {}).get('familyName', family_name),
+            user_id=user.get('userId', user_id))
