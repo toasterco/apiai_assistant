@@ -82,19 +82,33 @@ class GoogleAssistantParserTestCase(unittest.TestCase):
         self.assertFalse(parser.has_audio_capability())
 
     def test_user(self):
-        user_name = 'foo'
+        user_name = 'foo bar'
         user_id = 'bar'
         self.request['originalRequest']['data']['user'] = {
-            'userName': user_name,
+            'profile': {'displayName': user_name,
+                        'givenName': user_name.split(' ')[0],
+                        'familyName': user_name.split(' ')[1]},
             'userId': user_id
         }
 
         parser = GoogleAssistantParser(self.request)
-        self.assertEqual(parser.user.name, user_name)
+        self.assertEqual(parser.user.display_name, user_name)
+        self.assertEqual(parser.user.given_name, user_name.split(' ')[0])
+        self.assertEqual(parser.user.family_name, user_name.split(' ')[1])
         self.assertEqual(parser.user.id, user_id)
 
+        # Make sure User is not re-initialized if payload is tinkered with
         self.request['originalRequest']['data']['user']['userName'] = user_name[::-1]
-        self.assertEqual(parser.user.name, user_name)
+        self.assertEqual(parser.user.display_name, user_name)
+
+    def test_location(self):
+        user_id = 'bar'
+        coordinates ={'latitude': 1, 'longitude': -1}
+        self.request['originalRequest']['data']['device'] = {
+            'location': {'coordinates': coordinates}}
+
+        parser = GoogleAssistantParser(self.request)
+        self.assertEqual(parser.user.location, coordinates)
 
 
 if __name__ == '__main__':

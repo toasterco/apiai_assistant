@@ -282,6 +282,7 @@ Just like ``tell` and ``ask``, ``suggest`` retrieves a random value of the outpu
         ...
     }
 
+
 Adding contexts
 ~~~~~~~~~~~~~~~
 
@@ -302,6 +303,47 @@ Contexts are a good way to control the conversation flow, you must create input 
         """
 
 Read more about contexts `here <https://api.ai/docs/contexts>`__.
+
+Requesting permissions
+~~~~~~~~~~~~~~~~~~~~~~
+
+You are able to request permissions to access user data, the permissions are:
+
+* NAME - to access the user's full name (given name and family name)
+
+* COARSE_LOCATION - to access the user's coarse location (zipcode or postcode and city if available)
+
+* PRECEISE_LOCATION - to access the user's precise location (latitude and longitude, also formatted address and city if available)
+
+To do so, simply use the agent instance ``ask_for_permissions`` method by passing the reason of your permission request and a ``list`` of permissions you require.
+
+.. code:: python
+
+    agent.ask_for_permissions('To deliver the pizza', [
+        agent.SupportedPermissions.PRECISE_LOCATION,
+        agent.SupportedPermissions.COARSE_LOCATION
+    ])
+
+The reason of the permission request is used by Google when asking the user for the requested permission using the following format:
+
+* NAME: `<reason>, I'll just need to get your name from Google. Is that ok?`
+
+* COARSE_LOCATION: `<reason>, I'll just need to get your zip code from Google. Is that ok?`
+
+* PRECISE_LOCATION: `<reason>, I'll just need to get your street address from Google. Is that ok?`
+
+It is also important to note that for the permissions request to work properly you need to setup a fallback intent for the intent that triggers the request permission.
+
+*Example:*
+
+::
+
+ Intent: Create pizza ->
+ Intent: Confirm pizza creation is done ->
+ Intent: Ask for location permission ->
+   Fallback intent: Place order (use requested data here)
+
+The requested data can be found in the ``user`` attribute of the ``agent.parser`` - see `User <documentation/parser.rst#user>`__
 
 Aborting
 ~~~~~~~~

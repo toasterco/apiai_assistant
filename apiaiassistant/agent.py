@@ -16,63 +16,6 @@ Status = utils.enum(
 """ :obj:`apiaiassistant.utils.enum`: statuses of the agent """
 
 
-class Response(object):
-    """ Abstraction to build API.ai compatible responses """
-
-    def __init__(self):
-        self.code = Status.OK
-        self.error_message = None
-        self.expect_user_response = False
-        self._messages = [
-            self.initial_message
-        ]
-        self._contexts = []
-
-    @property
-    def initial_message(self):
-        return {'type': 0, 'speech': ''}
-
-    def abort(self, error_message, code=Status.GenericError):
-        self.code = code
-        self.error_message = error_message
-
-    def close_mic(self):
-        self.expect_user_response = False
-
-    def open_mic(self):
-        self.expect_user_response = True
-
-    def add_message(self, message, position=None):
-        if position is not None:
-            self._messages.insert(position, message)
-        else:
-            self._messages.append(message)
-
-    def add_context(self, context, position=None):
-        if position is not None:
-            self._contexts.insert(position, context)
-        else:
-            self._contexts.append(context)
-
-    def to_dict(self):
-        if self.code != Status.OK:
-            return {'error': '400'}
-
-        payload = {
-            'messages': self._messages,
-            'data': {
-                'google': {
-                    'expectUserResponse': self.expect_user_response
-                }
-            }
-        }
-
-        if self._contexts:
-            payload['contextOut'] = self._contexts
-
-        return payload
-
-
 class Agent(object):
     """
     Provides methods to instruct the agent on how to respond tu user queries
@@ -83,10 +26,12 @@ class Agent(object):
         ssml (boolean, optional, True): if True, will format speech to support SSML
     """
 
+    SupportedPermissions = utils.enum(
+        'NAME', 'COARSE_LOCATION', 'PRECISE_LOCATION')
+
     def __init__(self, corpus=None, request=None, ssml=True, *args, **kwargs):
         self.code = Status.OK
         self.error_message = None
-
         self._ssml = ssml
 
         self.corpus = corpus
@@ -224,3 +169,96 @@ class Agent(object):
             'lifespan': lifespan,
             'parameters': parameters or {}
         })
+
+    def ask_for_permissions(self, reason, permissions):
+        self.response.add_permission(reason, permissions)
+
+    def ask_for_confirmation(self, corpus_id):
+        self.ask(corpus_id)
+        self.suggest_raw(['Yes', 'No'])
+
+    def ask_for_confirmation_raw(self, question):
+        self.ask_raw(question)
+        self.suggest_raw(['Yes', 'No'])
+
+
+class Response(object):
+    """ Abstraction to build API.ai compatible responses """
+
+    PERMISSIONS = {
+        Agent.SupportedPermissions.NAME: 'NAME',
+        Agent.SupportedPermissions.COARSE_LOCATION: 'DEVICE_COARSE_LOCATION',
+        Agent.SupportedPermissions.PRECISE_LOCATION: 'DEVICE_PRECISE_LOCATION'
+    }
+
+    def __init__(self):
+        self.code = Status.OK
+        self.error_message = None
+        self.expect_user_response = False
+        self._messages = [
+            self.initial_message
+        ]
+        self._permissions = []
+        self._contexts = []
+
+    @property
+    def initial_message(self):
+        return {'type': 0, 'speech': ''}
+
+    def abort(self, error_message, code=Status.GenericError):
+        self.code = code
+        self.error_message = error_message
+
+    def close_mic(self):
+        self.expect_user_response = False
+
+    def open_mic(self):
+        self.expect_user_response = True
+
+    def add_message(self, message, position=None):
+        if position is not None:
+            self._messages.insert(position, message)
+        else:
+            self._messages.append(message)
+
+    def add_context(self, context, position=None):
+        if position is not None:
+            self._contexts.insert(position, context)
+        else:
+            self._contexts.append(context)
+
+    def add_permission(self, reason, permissions):
+        self._permissions.append((reason, [self.PERMISSIONS[p] for p in permissions]))
+
+    def to_dict(self):
+        if self.code != Status.OK:
+            return {'error': '400'}
+
+        payload = {
+            'messages': self._messages,
+            'data': {
+                'google': {
+                    'expectUserResponse': self.expect_user_response
+                }
+            }
+        }
+
+        if self._contexts:
+            payload['contextOut'] = self._contexts
+
+        if self._permissions:
+            reason = self._permissions[0][0]
+            permissions = list(
+                {p for _, perms in self._permissions for p in perms})
+
+            payload['data']['google']['systemIntent'] = {
+                "intent": "actions.intent.PERMISSION",
+                "data": {
+                    "@type": "type.googleapis.com/google.actions.v2.PermissionValueSpec",
+                    "optContext": reason,
+                    "permissions": permissions
+                }
+
+            }
+
+        return payload

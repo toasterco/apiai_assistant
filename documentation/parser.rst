@@ -12,14 +12,29 @@ User Object
 *class* ``parser``. **User**\(*name*, *user_id*)
   A simple user class used to encapsulate the user object from the API.ai request
 
-  *name* name of the user as a ``string``
-
   *user_id* id of the user as a ``string``
+
+  *display_name* display name of the user as a ``string``
+
+  *given_name* given name of the user as a ``string``
+
+  *family_name* family name of the user as a ``string``
+
+  *location* location of the user as a ``dict``
 
   The `User`_ class supports the following attributes:
 
-  **name**
-    Name of the user.
+  **display_name**
+    Display name of the user.
+
+  **given_name**
+    Given name of the user (first name).
+
+  **family_name**
+    Family name of the user (last name).
+
+  **location**
+    Location of the user, contains longitude, latitude, street address, country, or postcode depending on the permission requested (see `Requesting Permissions <../README.rst#requesting-permissions>`_)
 
   **id**
     ID of the user.
@@ -51,7 +66,7 @@ PayloadParser Object
   **is_valid**
     Validation property that must be implemented to validate the parser and data.
 
-  The following is defined as clas-level attribute of `PaylaodParser`:
+  The following is defined as clas-level attribute of ``PaylaodParser``:
 
   **PARAM_TYPES**
     `utils.Enum <utils.rst#enum>`_ object of keys `NUMBER`, `STRING`, and `LIST`
