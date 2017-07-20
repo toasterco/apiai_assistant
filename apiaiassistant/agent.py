@@ -187,8 +187,8 @@ class Response(object):
 
     PERMISSIONS = {
         Agent.SupportedPermissions.NAME: 'NAME',
-        Agent.SupportedPermissions.COARSE_LOCATION: 'COARSE_LOCATION',
-        Agent.SupportedPermissions.PRECISE_LOCATION: 'PRECISE_LOCATION'
+        Agent.SupportedPermissions.COARSE_LOCATION: 'DEVICE_COARSE_LOCATION',
+        Agent.SupportedPermissions.PRECISE_LOCATION: 'DEVICE_PRECISE_LOCATION'
     }
 
     def __init__(self):

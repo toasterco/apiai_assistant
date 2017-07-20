@@ -101,6 +101,15 @@ class GoogleAssistantParserTestCase(unittest.TestCase):
         self.request['originalRequest']['data']['user']['userName'] = user_name[::-1]
         self.assertEqual(parser.user.display_name, user_name)
 
+    def test_location(self):
+        user_id = 'bar'
+        coordinates ={'latitude': 1, 'longitude': -1}
+        self.request['originalRequest']['data']['device'] = {
+            'location': {'coordinates': coordinates}}
+
+        parser = GoogleAssistantParser(self.request)
+        self.assertEqual(parser.user.location, coordinates)
+
 
 if __name__ == '__main__':
     unittest.main()

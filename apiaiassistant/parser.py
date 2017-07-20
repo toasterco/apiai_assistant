@@ -167,15 +167,13 @@ class GoogleAssistantParser(PayloadParser):
         """
 
         user_id = 'APIAITEST'
-        display_name = None
-        given_name = None
-        family_name = None
-
-        user = self.data.get(
-            'originalRequest', {}).get('data', {}).get('user', {})
+        data = self.data.get(
+            'originalRequest', {}).get('data', {})
+        user = data.get('user', {})
 
         return User(
-            display_name=user.get('profile', {}).get('displayName', display_name),
-            given_name=user.get('profile', {}).get('givenName', given_name),
-            family_name=user.get('profile', {}).get('familyName', family_name),
-            user_id=user.get('userId', user_id))
+            user_id=user.get('userId', user_id),
+            display_name=user.get('profile', {}).get('displayName'),
+            given_name=user.get('profile', {}).get('givenName'),
+            family_name=user.get('profile', {}).get('familyName'),
+            location=data.get('device', {}).get('location', {}).get('coordinates'))
