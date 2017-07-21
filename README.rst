@@ -315,7 +315,7 @@ You are able to request permissions to access user data, the permissions are:
 
 * PRECISE_LOCATION - to access the user's precise location (latitude and longitude, also formatted address and city if available)
 
-Please see the `Actions on Google documentation <https://developers.google.com/actions/get-started/?hl=vi>`_ for more information on each permission.
+Please see the `Actions on Google documentation <https://developers.google.com/actions/reference/rest/Shared.Types/Permission>`_ for more information on each permission.
 
 To do so, simply use the agent instance ``ask_for_permissions`` method by passing the reason of your permission request and a ``list`` of permissions you require.
 
