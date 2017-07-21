@@ -180,3 +180,6 @@ GoogleAssistantPayloadParser Object
   **user**
     Property that returns the initialized User_ instance.
 
+  **device**
+    Property that returns the Device_ from the initialized User_ instance.
+
