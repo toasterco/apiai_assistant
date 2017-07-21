@@ -28,6 +28,7 @@ class Agent(object):
 
     SupportedPermissions = utils.enum(
         'NAME', 'COARSE_LOCATION', 'PRECISE_LOCATION')
+    """ :obj:`apiaiassistant.utils.enum`: permissions supported by the agent """
 
     def __init__(self, corpus=None, request=None, ssml=True, *args, **kwargs):
         self.code = Status.OK

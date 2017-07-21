@@ -7,25 +7,59 @@ request payload and offers abstractions to access objects of the payload
 
 from . import utils
 
+DEFAULT_LOCALE = 'en-US'
+DEFAULT_USER_ID = 'APIAITEST'
+
 
 class User(object):
     """
     A simple user class used to encapsulate the user object from the request
 
     Args:
-        name (str): name of the user
         user_id (str): uid of the user
+        locale (str): locale of the user
+        display_name (str): display name of the user
+        given_name (str): given name of the user (first name)
+        family_name (str): family name of the user (last name)
+        device (:obj:`Device`): device of the user
     """
 
     def __init__(
             self,
+            user_id=DEFAULT_USER_ID, locale=DEFAULT_LOCALE,
             display_name=None, given_name=None, family_name=None,
-            user_id=None, location=None):
+            device=None):
         self.display_name = display_name
         self.id = user_id
         self.given_name = given_name
         self.family_name = family_name
-        self.location = location
+        self.device = device
+        self.locale = locale
+
+class Device(object):
+    """
+    A simple device class used to encapsulate the device object from the reuqest
+
+    Args:
+        device_id (str): unique id of the device
+        coordinates (:obj:`dict`): longitude and latitude of device location
+        address (str): formatted address of the device
+        city (str): city of the device
+        zip_code (str): zip_code of the device
+        phone_number (str): phone number of the device location
+        notes (str): notes about the device location
+    """
+
+    def __init__(self,
+                 device_id=None, coordinates=None, address=None,
+                 city=None, zip_code=None, phone_number=None, notes=None):
+        self.id = device_id
+        self.coordinates = coordinates
+        self.address = address
+        self.city = city
+        self.zip_code = zip_code
+        self.phone_number = phone_number
+        self.notes = notes
 
 
 class PayloadParser(object):
@@ -158,6 +192,12 @@ class GoogleAssistantParser(PayloadParser):
             self._user = self._init_user()
         return self._user
 
+    @property
+    def device(self):
+        if self._user is None:
+            self._user = self._init_user()
+        return self._user.device
+
     def _init_user(self):
         """
         Initialise the user instance.
@@ -166,14 +206,24 @@ class GoogleAssistantParser(PayloadParser):
         that we are in a test environment and thus use dummy strings
         """
 
-        user_id = 'APIAITEST'
         data = self.data.get(
             'originalRequest', {}).get('data', {})
-        user = data.get('user', {})
+        device_data = data.get('device', {})
+        user_data = data.get('user', {})
+
+        device = Device(
+            device_id=device_data.get('uniqueDeviceId'),
+            coordinates=device_data.get('location', {}).get('coordinates'),
+            address=device_data.get('location', {}).get('formattedAddress'),
+            city=device_data.get('location', {}).get('city'),
+            zip_code=device_data.get('location', {}).get('zipCode'),
+            phone_number=device_data.get('location', {}).get('phoneNumber'),
+            notes=device_data.get('location', {}).get('notes'))
 
         return User(
-            user_id=user.get('userId', user_id),
-            display_name=user.get('profile', {}).get('displayName'),
-            given_name=user.get('profile', {}).get('givenName'),
-            family_name=user.get('profile', {}).get('familyName'),
-            location=data.get('device', {}).get('location', {}).get('coordinates'))
+            locale=user_data.get('locale', DEFAULT_LOCALE),
+            user_id=user_data.get('userId', DEFAULT_USER_ID),
+            display_name=user_data.get('profile', {}).get('displayName'),
+            given_name=user_data.get('profile', {}).get('givenName'),
+            family_name=user_data.get('profile', {}).get('familyName'),
+            device=device)

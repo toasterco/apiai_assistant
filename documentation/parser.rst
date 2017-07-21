@@ -4,23 +4,71 @@
 
 Provides Actions on Google Parser classes to read from the API.ai POST request payload and offers abstractions to access objects of the payload.
 
+Device Object
+=============
+
+.. _device:
+
+*class* ``parser``. **Device**\([*device_id* [, *coordinates* [, *address* [, *city* [, *zip_code*])
+  A simple device class used to encapsulate the device object from the API.ai request
+
+  *device_id* id of the device as a ``str``
+
+  *coordinates* coordinates of the device as a ``dict``
+
+  *address* formatted address of the device as a ``str``
+
+  *city* city of the device a ``str``
+
+  *zip_code* zip code of the device as a ``str``
+
+  *phone_number* phone number of the location as a ``str``
+
+  *notes* notes about the location of the device as a ``str``
+
+  The `Device`_ class supports the following attributes:
+
+  **coordinates**
+    Longitude and lattitude of the device.
+
+  **address**
+    Formatted address of the device.
+
+  **city**
+    City of the device.
+
+  **zip_code**
+    Zip code.
+
+  **phone_number**
+    Phone number if available.
+
+  **notes**
+    Notes if any.
+
+  **id**
+    ID of the device.
+
+
 User Object
 ===========
 
 .. _user:
 
-*class* ``parser``. **User**\(*name*, *user_id*)
+*class* ``parser``. **User**\(*user_id* [, *locale* [, *display_name* [, *given_name* [, *family_name* [, *device*])
   A simple user class used to encapsulate the user object from the API.ai request
 
-  *user_id* id of the user as a ``string``
+  *user_id* id of the user as a ``str``
 
-  *display_name* display name of the user as a ``string``
+  *locale* locale of the user as a ``str``
 
-  *given_name* given name of the user as a ``string``
+  *display_name* display name of the user as a ``str``
 
-  *family_name* family name of the user as a ``string``
+  *given_name* given name of the user as a ``str``
 
-  *location* location of the user as a ``dict``
+  *family_name* family name of the user as a ``str``
+
+  *device* device of the user as a `Device`_
 
   The `User`_ class supports the following attributes:
 
@@ -33,8 +81,11 @@ User Object
   **family_name**
     Family name of the user (last name).
 
-  **location**
-    Location of the user, contains longitude, latitude, street address, country, or postcode depending on the permission requested (see `Requesting Permissions <../README.rst#requesting-permissions>`_)
+  **device**
+    Device the user is using. Contains information abotu the user's location.
+
+  **locale**
+    Locale of the user.
 
   **id**
     ID of the user.
@@ -128,4 +179,7 @@ GoogleAssistantPayloadParser Object
 
   **user**
     Property that returns the initialized User_ instance.
+
+  **device**
+    Property that returns the Device_ from the initialized User_ instance.
 

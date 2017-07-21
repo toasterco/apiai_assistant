@@ -102,13 +102,32 @@ class GoogleAssistantParserTestCase(unittest.TestCase):
         self.assertEqual(parser.user.display_name, user_name)
 
     def test_location(self):
-        user_id = 'bar'
-        coordinates ={'latitude': 1, 'longitude': -1}
+        device_id = 'bar'
+        coordinates = {'latitude': 1, 'longitude': -1}
+        zip_code = 'WC2H 8DY'
+        phone_number = '07 42 42 4242 42'
+        address = 'North wing, 9th floor, Central St Giles, London, UK'
+        city = 'London'
+        notes = 'gfit'
+
         self.request['originalRequest']['data']['device'] = {
-            'location': {'coordinates': coordinates}}
+            'location': {'coordinates': coordinates,
+                         'zipCode': zip_code,
+                         'city': city,
+                         'phoneNumber': phone_number,
+                         'formattedAddress': address,
+                         'notes': notes},
+            'uniqueDeviceId': device_id
+        }
 
         parser = GoogleAssistantParser(self.request)
-        self.assertEqual(parser.user.location, coordinates)
+        self.assertEqual(parser.user.device.id, device_id)
+        self.assertEqual(parser.user.device.coordinates, coordinates)
+        self.assertEqual(parser.user.device.city, city)
+        self.assertEqual(parser.user.device.phone_number, phone_number)
+        self.assertEqual(parser.user.device.address, address)
+        self.assertEqual(parser.user.device.zip_code, zip_code)
+        self.assertEqual(parser.user.device.notes, notes)
 
 
 if __name__ == '__main__':

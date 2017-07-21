@@ -547,7 +547,7 @@ README structure and style based on `tqdm <https://pypi.python.org/pypi/tqdm>`__
 
 `*` Original author
 
-.. |Logo| image:: https://raw.githubusercontent.com/toasterco/apiaiassistant/master/images/apiaiassistant-logo.png
+.. |Logo| image:: images/apiaiassistant-logo.png
    :height: 180px
    :width: 180 px
    :alt: apiaiassistant logo
