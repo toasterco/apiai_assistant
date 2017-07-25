@@ -11,8 +11,8 @@ from apiaiassistant.widgets import LinkOutChipWidget
 
 
 FAKE_CORPUS = {
-    'foo': ['bar'],
-    'confirmation': [['Yes', 'No']]
+    "corpus": {'foo': ['bar']},
+    "suggestions": {'confirmation': [['Yes', 'No']]}
 }
 
 
@@ -159,9 +159,9 @@ class AgentTestCase(unittest.TestCase):
             [
                 agent.response.initial_message,
                 {
-                    'displayText': FAKE_CORPUS[key][0],
+                    'displayText': FAKE_CORPUS['corpus'][key][0],
                     'ssml': '<speak>{}</speak>'.format(
-                        FAKE_CORPUS[key][0].format(context)),
+                        FAKE_CORPUS['corpus'][key][0].format(context)),
                     'platform': 'google',
                     'type': 'simple_response'
                 }
@@ -181,9 +181,9 @@ class AgentTestCase(unittest.TestCase):
             [
                 agent.response.initial_message,
                 {
-                    'displayText': FAKE_CORPUS[key][0],
+                    'displayText': FAKE_CORPUS['corpus'][key][0],
                     'ssml': '<speak>{}</speak>'.format(
-                        FAKE_CORPUS[key][0].format(context)),
+                        FAKE_CORPUS['corpus'][key][0].format(context)),
                     'platform': 'google',
                     'type': 'simple_response'
                 }
@@ -285,9 +285,9 @@ class AgentTestCase(unittest.TestCase):
             [
                 agent.response.initial_message,
                 {
-                    'displayText': FAKE_CORPUS[key][0],
+                    'displayText': FAKE_CORPUS['corpus'][key][0],
                     'ssml': '<speak>{}</speak>'.format(
-                        FAKE_CORPUS[key][0]),
+                        FAKE_CORPUS['corpus'][key][0]),
                     'platform': 'google',
                     'type': 'simple_response'
                 },
@@ -303,7 +303,7 @@ class AgentTestCase(unittest.TestCase):
         )
 
     def test_ask_for_confirmation_raw(self):
-        agent = Agent()
+        agent = Agent(corpus=Corpus('foo.json'))
         question = 'Annie are you OK?'
         agent.ask_for_confirmation_raw(question)
 
