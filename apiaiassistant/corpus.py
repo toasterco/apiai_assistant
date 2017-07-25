@@ -69,6 +69,9 @@ class Corpus(object):
     def get_confirmation(self):
         """ Returns a random confirmation """
 
+        if self.corpus is None:
+            self.init_corpus()
+
         return random.choice(self.confirmations)
 
     def get(self, key, source=None):

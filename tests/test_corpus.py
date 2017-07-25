@@ -31,7 +31,9 @@ class CorpusTestCase(unittest.TestCase):
     def test_init_corpus(self):
         c = Corpus('dummystring')
         c.corpus = None
+        c.confirmations = None
         self.assertTrue('foo' in c)
+        self.assertTrue(c.confirmations, Corpus.DEFAULT_CONFIRMATIONS)
 
         c.corpus = None
         self.assertEqual(c['foo'], 'bar')
