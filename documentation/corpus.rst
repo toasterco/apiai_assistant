@@ -17,9 +17,15 @@ Corpus Object
   **init_corpus**\()
     Opens the file at ``filepath`` for reading and loads its content as JSON into ``corpus``.
 
+  **validate**\(*data*)
+    Returns ``True`` if the ``dict`` **data** object is a valid corpus JSON object. False otherwise.
+
   **get**\(*key*)
     Inits the corpus if it wasn't initialized yet and returns a random value of **key** within ``corpus``.
     If **key** cannot be found, ``None`` is returned.
+
+  **get_confirmation**\()
+    Inits the corpus if it wasn't initialized yet and returns a random confirmation.
 
   **__getitem__**\(*key*)
     Abstraction for **get()**, allows square bracket notation on ``corpus.Corpus`` instances.
@@ -33,3 +39,6 @@ Corpus Object
 
   **filepath**
     Path to a JSON file
+
+  **DEFAULT_CONFIRMATIONS**
+    Default confirmations used if not found in the JSON object.

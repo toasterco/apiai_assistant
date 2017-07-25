@@ -49,7 +49,7 @@ Agent Object
     Looks for the **corpus_id** in the corpus to create a ``widgets.SuggestionWidget``  and passes it down to **show()**
 
   **ask_for_confirmation**\(*corpus_id*)
-    Looks for the **corpus_id** in the corpus and passes it down to ``agent.ask()``, then suggests 'Yes' or 'No' using ``agent.suggest_raw()``
+    Looks for the **corpus_id** in the corpus and passes it down to ``agent.ask()``, then suggests a confirmation from the corpus using ``agent.suggest_raw()``
 
   **tell_raw**\(*speech* [, *text*])
     Creates a ``widgets.SimpleResponseWidget`` with the **speech** and **text** and passes it down to **show()**, the mic will also be closed.
@@ -63,7 +63,7 @@ Agent Object
     Creates a ``widgets.SuggestionWidget`` with **suggestions** and passes it down to **show()**
 
   **ask_for_confirmation_raw**\(*question*)
-    Passes *question* to ``agent.ask_raw()``, then suggests 'Yes' or 'No' using ``agent.suggest_raw()``
+    Passes *question* to ``agent.ask_raw()``, then suggests a confirmation from the corpus using ``agent.suggest_raw()``.
 
   **show**\(*obj*)
     Renders a response widget and adds it to ``response.messages``

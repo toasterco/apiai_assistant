@@ -98,7 +98,7 @@ class Agent(object):
             corpus_id (str): ID of the suggestions to show
         """
 
-        suggestions = self.corpus[corpus_id]
+        suggestions = self.corpus.get(corpus_id, self.corpus.suggestions)
 
         if suggestions:
             self.suggest_raw(suggestions)
@@ -176,11 +176,11 @@ class Agent(object):
 
     def ask_for_confirmation(self, corpus_id):
         self.ask(corpus_id)
-        self.suggest_raw(['Yes', 'No'])
+        self.suggest_raw(self.corpus.get_confirmation())
 
     def ask_for_confirmation_raw(self, question):
         self.ask_raw(question)
-        self.suggest_raw(['Yes', 'No'])
+        self.suggest_raw(self.corpus.get_confirmation())
 
 
 class Response(object):
