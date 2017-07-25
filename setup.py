@@ -3,23 +3,30 @@ from setuptools import setup
 from codecs import open
 from os import path
 
-here = path.abspath(path.dirname(__file__))
+VERSION = '1.0.0'
 
-with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
-    long_description = f.read()
+HERE = path.abspath(path.dirname(__file__))
+with open(path.join(HERE, 'README.rst'), encoding='utf-8') as f:
+    LONG_DESCRIPTION = f.read()
 
 setup(
     name='apiaiassistant',
 
-    version='1.0.0',
+    version=VERSION,
 
     description='Create API.ai agents in a heartbeat',
-    long_description=long_description,
+    long_description=LONG_DESCRIPTION,
 
-    url='TODO/apiaiassistant',
+    url='https://github.com/ToasterLTD/apiaiassistant',
 
-    author='Toaster LTD',
-    author_email='developers@toasterltd.com',
+    author='Zack Dibe',
+    author_email='contact@zackdibe.com',
+
+    maintainer='Toaster LTD developers',
+    maintainer_email='developers@toasterltd.com',
+
+    platforms=['any'],
+    packages=['apiaiassistant'],
 
     license='MIT',
 

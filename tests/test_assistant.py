@@ -21,7 +21,7 @@ class AssistantTestCase(unittest.TestCase):
 
         @ass.intent('foo')
         def bar(agent):
-            agent.tell('foobar')
+            agent.tell_raw('foobar')
 
         request = get_dummy_request()
         request['result']['action'] = 'foo'
@@ -32,7 +32,7 @@ class AssistantTestCase(unittest.TestCase):
             [
                 agent.response.initial_message,
                 {'platform': 'google',
-                 'speech': '<speak>foobar</speak>',
+                 'ssml': '<speak>foobar</speak>',
                  'displayText': 'foobar',
                  'type': 'simple_response'}
             ]
@@ -44,13 +44,13 @@ class AssistantTestCase(unittest.TestCase):
 
         @ass.intent('foo')
         def bar(agent):
-            agent.tell('foobar')
+            agent.tell_raw('foobar')
 
         request = get_dummy_request()
         request['result']['action'] = 'foo'
 
         agent = ass.process(request, headers={'magic-key': magic_key[::-1]})
-        self.assertEqual(agent.code, Status.KO)
+        self.assertEqual(agent.code, Status.AccessDenied)
         self.assertEqual(agent.error_message, 'Could not verify request')
 
         agent = ass.process(request, headers={'magic-key': magic_key})
@@ -61,7 +61,7 @@ class AssistantTestCase(unittest.TestCase):
             [
                 agent.response.initial_message,
                 {'platform': 'google',
-                 'speech': '<speak>foobar</speak>',
+                 'ssml': '<speak>foobar</speak>',
                  'displayText': 'foobar',
                  'type': 'simple_response'}
             ]
@@ -72,7 +72,7 @@ class AssistantTestCase(unittest.TestCase):
         agent = Agent()
         ass.validate(agent)
 
-        self.assertEqual(agent.code, Status.KO)
+        self.assertEqual(agent.code, Status.InvalidData)
         self.assertEqual(agent.error_message, 'Could not instantiate parser')
 
     def test_validate_request(self):
@@ -80,7 +80,7 @@ class AssistantTestCase(unittest.TestCase):
         agent = Agent(request={'foo': 'bar'})
         ass.validate(agent)
 
-        self.assertEqual(agent.code, Status.KO)
+        self.assertEqual(agent.code, Status.InvalidData)
         self.assertEqual(agent.error_message, 'Could not validate data')
 
     def test_validate_action(self):
@@ -97,7 +97,7 @@ class AssistantTestCase(unittest.TestCase):
         request['result']['action'] = action[::-1]
         agent = Agent(request=request)
         ass.validate(agent)
-        self.assertEqual(agent.code, Status.KO)
+        self.assertEqual(agent.code, Status.InvalidData)
         self.assertEqual(agent.error_message, 'Could not understand action')
 
 if __name__ == '__main__':

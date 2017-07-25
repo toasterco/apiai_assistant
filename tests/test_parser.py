@@ -1,8 +1,16 @@
 import unittest
 
+from apiaiassistant.parser import PayloadParser
 from apiaiassistant.parser import GoogleAssistantParser
 
 from tests import get_dummy_request
+
+
+class PayloadParserTestCase(unittest.TestCase):
+    def test_is_valid_not_implemented(self):
+        parser = PayloadParser({})
+        with self.assertRaises(NotImplementedError):
+            parser.is_valid
 
 
 class GoogleAssistantParserTestCase(unittest.TestCase):
@@ -74,19 +82,52 @@ class GoogleAssistantParserTestCase(unittest.TestCase):
         self.assertFalse(parser.has_audio_capability())
 
     def test_user(self):
-        user_name = 'foo'
+        user_name = 'foo bar'
         user_id = 'bar'
         self.request['originalRequest']['data']['user'] = {
-            'userName': user_name,
+            'profile': {'displayName': user_name,
+                        'givenName': user_name.split(' ')[0],
+                        'familyName': user_name.split(' ')[1]},
             'userId': user_id
         }
 
         parser = GoogleAssistantParser(self.request)
-        self.assertEqual(parser.user.name, user_name)
+        self.assertEqual(parser.user.display_name, user_name)
+        self.assertEqual(parser.user.given_name, user_name.split(' ')[0])
+        self.assertEqual(parser.user.family_name, user_name.split(' ')[1])
         self.assertEqual(parser.user.id, user_id)
 
+        # Make sure User is not re-initialized if payload is tinkered with
         self.request['originalRequest']['data']['user']['userName'] = user_name[::-1]
-        self.assertEqual(parser.user.name, user_name)
+        self.assertEqual(parser.user.display_name, user_name)
+
+    def test_location(self):
+        device_id = 'bar'
+        coordinates = {'latitude': 1, 'longitude': -1}
+        zip_code = 'WC2H 8DY'
+        phone_number = '07 42 42 4242 42'
+        address = 'North wing, 9th floor, Central St Giles, London, UK'
+        city = 'London'
+        notes = 'gfit'
+
+        self.request['originalRequest']['data']['device'] = {
+            'location': {'coordinates': coordinates,
+                         'zipCode': zip_code,
+                         'city': city,
+                         'phoneNumber': phone_number,
+                         'formattedAddress': address,
+                         'notes': notes},
+            'uniqueDeviceId': device_id
+        }
+
+        parser = GoogleAssistantParser(self.request)
+        self.assertEqual(parser.user.device.id, device_id)
+        self.assertEqual(parser.user.device.coordinates, coordinates)
+        self.assertEqual(parser.user.device.city, city)
+        self.assertEqual(parser.user.device.phone_number, phone_number)
+        self.assertEqual(parser.user.device.address, address)
+        self.assertEqual(parser.user.device.zip_code, zip_code)
+        self.assertEqual(parser.user.device.notes, notes)
 
 
 if __name__ == '__main__':

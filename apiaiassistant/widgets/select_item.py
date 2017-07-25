@@ -14,8 +14,8 @@ class SelectItem(GoogleAssistantWidget):
 
     def render(self):
         return {
-            "title": self.title,
-            "description": self.text,
-            "optionInfo": self.option_info.render(),
-            "image": self.image.render() if self.image else None
+            'title': self.title,
+            'description': self.text,
+            'optionInfo': self.option_info.render(),
+            'image': self.image.render() if self.image else None
         }

@@ -1,0 +1,12 @@
+[run]
+branch = True
+source = apiaiassistant
+
+[report]
+exclude_lines =
+    return f\(\*args, \*\*kwargs\)
+    raise NotImplementedError
+    if __name__ == .__main__.:
+ignore_errors = True
+omit =
+    tests/*

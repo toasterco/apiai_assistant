@@ -1,3 +1,7 @@
+""" Utils
+
+Provides utility functions for the modules of the apiaiassistant package """
+
 import re
 
 
@@ -16,7 +20,14 @@ NUMBER_WORDS = {
 
 
 def text_to_int(textnum):
-    """
+    """ Translates the string representation of a number to an int
+
+    Args:
+        textnum (str): string to translate
+
+    Returns:
+        :obj:`int` translated string literal
+
     http://stackoverflow.com/questions/493174/is-there-a-way-to-convert-number-words-to-integers
     """
 
@@ -58,6 +69,16 @@ def text_to_int(textnum):
 
 
 def enum(*sequential, **named):
+    """ Dynamically creates an enum object
+
+    Args:
+        sequential (:obj:`list`): sequence of enum values
+        named (:obj:`dict`): map of enum values with their name and respective value
+
+    Returns:
+        :obj:`Enum` an Enum object
+    """
+
     enums = dict(zip(sequential, range(len(sequential))), **named)
     by_value = dict((value, key) for key, value in enums.iteritems())
     by_key = dict((key, value) for key, value in enums.iteritems())
@@ -69,6 +90,16 @@ def enum(*sequential, **named):
 
 
 def readable_list(elements, liaison='and'):
+    """ Creates a readable sentence by joining elements of a list
+
+    Args:
+        elements (:obj:`list` of :obj:`str`): elements to join together
+        liaison (`str`, optional, 'and'): liaison to use to join elements
+
+    Returns:
+        `str` A human readable sentence joining all elements
+    """
+
     if not elements:
         return ""
 

@@ -10,9 +10,9 @@ class Button(GoogleAssistantWidget):
 
     def render(self):
         return {
-            "title": self.title,
-            "openUrlAction": {
-                "url": self.weblink,
+            'title': self.title,
+            'openUrlAction': {
+                'url': self.weblink,
             }
         }
 
@@ -25,4 +25,4 @@ class Image(GoogleAssistantWidget):
         super(Image, self).__init__()
 
     def render(self):
-        return {"url": self.url, "accessibilityText": self.alt}
+        return {'url': self.url, 'accessibilityText': self.alt}

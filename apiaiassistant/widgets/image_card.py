@@ -16,7 +16,7 @@ class ImageCardWidget(GoogleAssistantWidget):
         self.text = text
         self.image = image
         self.button = button
-        self.type = "basic_card"
+        self.type = 'basic_card'
 
         super(ImageCardWidget, self).__init__()
 
@@ -24,11 +24,12 @@ class ImageCardWidget(GoogleAssistantWidget):
         payload = super(ImageCardWidget, self).render()
 
         payload.update({
-            "type": self.type,
-            "title": self.title,
-            "formattedText": self.text,
-            "image": self.image.render() if self.image else None,
-            "buttons": [self.button.render()] if self.button else []
+            'type': self.type,
+            'title': self.title,
+            'formattedText': self.text,
+            'image': self.image.render() if self.image else None,
+            'buttons': [self.button.render()] if self.button else []
         })
 
         return payload
+
