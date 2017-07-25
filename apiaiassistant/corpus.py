@@ -15,6 +15,7 @@ class Corpus(object):
     """
 
     DEFAULT_CONFIRMATIONS = [['Yes', 'No']]
+    """ :list: used if no confirmations object is found in the corpus JSON object """
 
     def __init__(self, filepath):
         self.filepath = filepath

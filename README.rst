@@ -223,6 +223,10 @@ To have your agent asks the user something and wait for an answer, you can use t
           text (str, optional): text to ask, if None, speech will be used
       """
 
+You can also use ``ask_for_confirmation`` to ask the user something and prompt them with two suggestion chips representing confirmation.
+
+| By default those two chips are "Yes" and "No" but they can be selected from a random list of values if the ``confirmations`` object of your corpus is set, see `Writing a corpus <#writing-a-corpus>`__
+
 Showing the user
 ~~~~~~~~~~~~~~~~
 
@@ -260,28 +264,31 @@ Suggestions are a form of rich responses but ``apiaiassitant.agent.Agent`` offer
 
 .. code:: python
 
-   agent.suggest('suggest-options') # Suggests the values of 'suggest-options'
+   agent.suggest('options') # Suggests the values of 'suggestions.options'
    agent.suggest_raw(['Yes', 'No']) # Suggests 'Yes' or 'No'
    agent.suggest_raw('Yes I am sure') # Suggests 'Yes I am sure'
 
-Just like ``tell` and ``ask``, ``suggest`` retrieves a random value of the output id from the corpus but the format of suggestions is the same as the one for the other simple outputs, the only difference being that when having a list of lists, the nested lists are not limited to a size of 2 elements, see `Writing a corpus <#writing-a-corpus>`__.
+Just like ``tell` and ``ask``, ``suggest`` retrieves a random value of the output id from the ``suggestions`` object of the corpus but the format of suggestions is the same as the one for the other simple outputs, the only difference being that when having a list of lists, the nested lists are not limited to a size of 2 elements and you must placed the suggestions within the ``suggesstions`` attribute of your corpus JSON object, see `Writing a corpus <#writing-a-corpus>`__.
 
 .. code:: javascript
 
     {
-        simple-output-key: [
-            [voiceChoiceA, textChoiceA],	// must be 2 elements MAX
-            voiceChoiceB,			// can also be just a string
-            [voiceChoicec, textChoicec]
-        ],
-        suggestion-output-key: [
-            singleSuggestion,						// can be just a string
-            [suggestionA, suggestionB, suggestionC, suggestionD],	// can also be a list of strings
-            [suggestionA, suggestionB, suggestionC]
-        ],
-        ...
-    }
+        "corpus": {
+            simple-output-key: [
+                [voiceChoiceA, textChoiceA],	// must be 2 elements MAX
+                voiceChoiceB,			// can also be just a string
+                [voiceChoicec, textChoicec]
+            ],
+        },
 
+        "suggestions": {
+            suggestion-output-key: [
+                singleSuggestion,					// can be just a string
+                [suggestionA, suggestionB, suggestionC, suggestionD],	// can also be a list of strings
+                [suggestionA, suggestionB, suggestionC]
+            ],
+        }
+    }
 
 Adding contexts
 ~~~~~~~~~~~~~~~
@@ -364,39 +371,58 @@ Writing a corpus
 
 A corpus is a large and structured set of texts, in the contexts of ``apiaiassistant``, corpora are JSON files containing all outputs of your agent.
 
-When rendering an output via ``.tell()``, ``.ask()``, or ``.suggest()``, the agent looks up the output id within the corpus and **randomly selects a choice from the list value for that output id**, thus making your agent responses less predictable and more organic.
+When rendering an output via ``.tell()``, ``.ask()``, ``.suggest()``, or ``.ask_for_confirmation()``, the agent looks up the output id within the corpus and **randomly selects a choice from the list value for that output id**, thus making your agent responses less predictable and more organic.
 
-Your corpus must contain only one object and the value for each key must be a list of strings or list of jsonified tuples (unless it's a suggestion output, see `Suggesting options to the user <#suggesting-options-to-the-user>`__.
+Your corpus must contain at least the ``corpus`` object and the value for each key must be a list of strings or list of jsonified tuples (unless it's a suggestion output, see `Suggesting options to the user <#suggesting-options-to-the-user>`__.
 
 When having a list of string as the value, the text output will be the same as the speech output.
 
 When having a list of jsonified tuples as the value, the speech output will be the first element and the text will be the second.
 
 
-Shown below are the required structures
+Shown below is the required structures
 
 .. code:: javascript
 
     {
-        key: [
-            choiceA,
-            choiceB,
-            choiceC
-        ],
-        ...
+        "corpus": {
+            key: [
+                choiceA,
+                [voiceChoiceB, textChoiceB],	//You can mix strings and lists as values
+                choiceC
+            ],
+            ...
+        }
     }
 
-Or
+Corpora also support a ``suggestions`` object to lookup corpus ids when using ``suggest()`` and a ``confirmations`` object to randomly get a set of confirmation values instead of the default "Yes" and "No" when using ``ask_for_confirmation()``
 
 .. code:: javascript
 
     {
-        key: [
-            [voiceChoiceA, textChoiceA],
-            [voiceChoiceB, textChoiceB],
-            [voiceChoicec, textChoicec]
-        ],
-        ...
+        "corpus": {
+            key: [
+                choiceA,
+                [voiceChoiceB, textChoiceB],
+                choiceC
+            ],
+            ...
+        },
+
+        "suggestions": {
+            key: [
+                choiceA,
+                [voiceChoiceB, textChoiceB],
+                choiceC
+            ],
+            ...
+        },
+
+        "confirmations": [
+            ["Yes", "No"],
+            ["Yeah", "Nah"],
+            ["Yup", "Nop"]
+        ]
     }
 
 
@@ -460,15 +486,11 @@ To do
 
 - Better error support (all error code, not only 400, and include error message)
 
-- Support follow up intents
+- Add follow up intents support
 
 - Support other smart assistant platforms (Alexa, Messenger, Slack as priorities)
 
-- Support permission requests
-
 - Assist account linking
-
-- Support API.ai sandbox mode
 
 
 Documentation
