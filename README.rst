@@ -62,13 +62,16 @@ The list of all changes is available either on GitHub's Releases:
 `allmychanges.com <https://allmychanges.com/p/python/apiai_assistant/>`_.
 
 
-Sample Usage
-============
+Usage
+=====
+
+Sample project
+--------------
 
 See the `apiai_assistant-sample <https://github.com/toasterco/apiai_assistant-sample>`__ project.
 
-Usage
-=====
+Further reading
+---------------
 
 * `Declaring an Assistant <documentation/usage_guide.rst#declaringanAssistant>`__
 
@@ -120,59 +123,13 @@ To do
 Documentation
 =============
 
-* `Assistant <documentation/assistant.rst#assistant>`__
-
-* `Agent <documentation/agent.rst#agent>`__
-
-  * `Response <documentation/agent.rst#response>`__
-
-* `Corpus <documentation/corpus.rst#corpus>`__
-
-* `Utils <documentation/utils.rst>`__
-
-* `Parser <documentation/parser.rst>`__
-
-  * `User <documentation/parser.rst#user>`__
-
-  * `PayloadParser <documentation/parser.rst#payloadparser>`__
-
-  * `GoogleAssistantPayloadParser <documentation/parser.rst#googleassistantpayloadparser>`__
-
-* `widgets <documentation/widgets.rst>`__
-
-  * `InvalidGoogleAssistantWidget <documentation/widgets.rst#InvalidGoogleAssistantWidget>`__
-
-  * `GoogleAssistantWidget <documentation/widgets.rst#googleassistantwidget>`__
-
-  * `SimpleResponseWidget <documentation/widgets.rst#simpleresponsewidget>`__
-
-  * `SuggestionsWidget <documentation/widgets.rst#suggestionswidget>`__
-
-  * `LinkOutChipWidget <documentation/widgets.rst#linkoutchipwidget>`__
-
-  * `ImageCardWidget <documentation/widgets.rst#imagecardwidget>`__
-
-  * `Image <documentation/widgets.rst#image>`__
-
-  * `Button <documentation/widgets.rst#button>`__
-
-  * `ListSelectWidget <documentation/widgets.rst#listselectwidget>`__
-
-  * `CarouselSelectWidget <documentation/widgets.rst#carouselselectwidget>`__
-
-  * `SelectItem <documentation/widgets.rst#selectitem>`__
-
-  * `OptionInfo <documentation/widgets.rst#optioninfo>`__
+All the doc can be found over `here <documentation/private_api.rst>`__.
 
 Contributions
 =============
 
 All source code is hosted on `GitHub <https://github.com/ToasterCo/apiai_assistant>`__.
 Contributions are welcome.
-
-See the
-`CONTRIBUTING <https://raw.githubusercontent.com/toasterco/apiai_assistant/master/CONTRIBUTING.md>`__
-file for more information.
 
 
 LICENCE
