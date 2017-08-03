@@ -15,8 +15,6 @@ Module Contents
 
   Raises ``Exception`` if a part of **textnum** couldn't be found in ``utils.NUMBER_WORDS``
 
-.. _enum:
-
 ``utils``. **enum**\(*\*sequential*, *\*\*named*)
   Dynamically creates an enumeration object of type ``Enum``.
 
