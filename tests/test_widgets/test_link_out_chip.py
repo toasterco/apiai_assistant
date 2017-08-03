@@ -1,6 +1,6 @@
 import unittest
 
-from apiaiassistant.widgets import LinkOutChipWidget
+from apiai_assistant.widgets import LinkOutChipWidget
 
 
 class LinkOutChipWidgetTestCase(unittest.TestCase):

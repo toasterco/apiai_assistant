@@ -1,9 +1,9 @@
 import unittest
 
-from apiaiassistant.widgets import ImageCardWidget
-from apiaiassistant.widgets import Button
-from apiaiassistant.widgets import Image
-from apiaiassistant.widgets import InvalidGoogleAssistantWidget
+from apiai_assistant.widgets import ImageCardWidget
+from apiai_assistant.widgets import Button
+from apiai_assistant.widgets import Image
+from apiai_assistant.widgets import InvalidGoogleAssistantWidget
 
 
 class ImageCardWidgetTestCase(unittest.TestCase):

@@ -1,4 +1,4 @@
-from apiaiassistant import corpus
+from apiai_assistant import corpus
 
 def mocked_init_corpus(faked_corpus=None):
     def mocked_init_corpus_closure(self):

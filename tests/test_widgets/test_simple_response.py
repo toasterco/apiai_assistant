@@ -1,7 +1,7 @@
 import unittest
 
-from apiaiassistant.widgets import SimpleResponseWidget
-from apiaiassistant.widgets import InvalidGoogleAssistantWidget
+from apiai_assistant.widgets import SimpleResponseWidget
+from apiai_assistant.widgets import InvalidGoogleAssistantWidget
 
 
 class SimpleResponseWidgetTestCase(unittest.TestCase):

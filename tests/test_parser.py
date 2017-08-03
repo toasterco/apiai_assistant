@@ -1,7 +1,7 @@
 import unittest
 
-from apiaiassistant.parser import PayloadParser
-from apiaiassistant.parser import GoogleAssistantParser
+from apiai_assistant.parser import PayloadParser
+from apiai_assistant.parser import GoogleAssistantParser
 
 from tests import get_dummy_request
 

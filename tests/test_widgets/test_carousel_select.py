@@ -1,8 +1,8 @@
 import unittest
 
-from apiaiassistant.widgets import OptionInfo
-from apiaiassistant.widgets import SelectItem
-from apiaiassistant.widgets import CarouselSelectWidget
+from apiai_assistant.widgets import OptionInfo
+from apiai_assistant.widgets import SelectItem
+from apiai_assistant.widgets import CarouselSelectWidget
 
 
 class CarouselSelectWidgetTestCase(unittest.TestCase):

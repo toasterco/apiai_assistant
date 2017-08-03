@@ -1,8 +1,8 @@
 import unittest
 
-from apiaiassistant.widgets import OptionInfo
-from apiaiassistant.widgets import SelectItem
-from apiaiassistant.widgets import ListSelectWidget
+from apiai_assistant.widgets import OptionInfo
+from apiai_assistant.widgets import SelectItem
+from apiai_assistant.widgets import ListSelectWidget
 
 
 class ListSelectWidgetTestCase(unittest.TestCase):

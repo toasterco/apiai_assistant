@@ -11,7 +11,7 @@ from .corpus import Corpus
 
 
 class Assistant(object):
-    """ Entrypoint for the apiaiassistant package. The Assistant class
+    """ Entrypoint for the apiai_assistant package. The Assistant class
     manages the different intents of the agent and processes the requests
 
     Args:
@@ -61,7 +61,7 @@ class Assistant(object):
         if the agent instance is not valid
 
         Args:
-            agent_instance (:obj:`apiaiassistant.agent.Agent`): agent instance
+            agent_instance (:obj:`apiai_assistant.agent.Agent`): agent instance
 
         Returns:
             bool: True if valid, False otherwise.
@@ -112,7 +112,7 @@ class Assistant(object):
             headers (:obj:`dict`, optional): headers of the HTTP request to verify it
 
         Returns:
-            :obj:`apiaiassistant.agent.Agent`: Agent instance with the action performed in it
+            :obj:`apiai_assistant.agent.Agent`: Agent instance with the action performed in it
         """
 
         agent_instance = agent.Agent(

@@ -1,6 +1,6 @@
 import unittest
 
-from apiaiassistant.widgets import GoogleAssistantWidget
+from apiai_assistant.widgets import GoogleAssistantWidget
 
 
 class GoogleAssistantWidgetTestCase(unittest.TestCase):

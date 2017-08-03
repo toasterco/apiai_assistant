@@ -1,6 +1,6 @@
 import unittest
 
-from apiaiassistant.widgets import SuggestionsWidget
+from apiai_assistant.widgets import SuggestionsWidget
 
 
 class SuggestionsWidgetTestCase(unittest.TestCase):

@@ -1,7 +1,7 @@
 import unittest
 
-from apiaiassistant.widgets import InvalidGoogleAssistantWidget
-from apiaiassistant.widgets import OptionInfo
+from apiai_assistant.widgets import InvalidGoogleAssistantWidget
+from apiai_assistant.widgets import OptionInfo
 
 
 class OptionInfoTestCase(unittest.TestCase):

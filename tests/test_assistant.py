@@ -1,7 +1,7 @@
 import unittest
 
-from apiaiassistant.assistant import Assistant
-from apiaiassistant.agent import Agent, Status
+from apiai_assistant.assistant import Assistant
+from apiai_assistant.agent import Agent, Status
 
 from tests import get_dummy_request
 

@@ -3,11 +3,11 @@ import unittest
 
 from tests import mocked_init_corpus
 
-from apiaiassistant.agent import Response
-from apiaiassistant.agent import Agent
-from apiaiassistant.agent import Status
-from apiaiassistant.corpus import Corpus
-from apiaiassistant.widgets import LinkOutChipWidget
+from apiai_assistant.agent import Response
+from apiai_assistant.agent import Agent
+from apiai_assistant.agent import Status
+from apiai_assistant.corpus import Corpus
+from apiai_assistant.widgets import LinkOutChipWidget
 
 
 FAKE_CORPUS = {
@@ -112,7 +112,7 @@ class ResponseTestCase(unittest.TestCase):
              r.PERMISSIONS[Agent.SupportedPermissions.PRECISE_LOCATION]})
 
 
-@mock.patch('apiaiassistant.corpus.Corpus.init_corpus', mocked_init_corpus(FAKE_CORPUS))
+@mock.patch('apiai_assistant.corpus.Corpus.init_corpus', mocked_init_corpus(FAKE_CORPUS))
 class AgentTestCase(unittest.TestCase):
     def test_repr(self):
         agent = Agent()

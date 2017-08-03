@@ -13,7 +13,7 @@ Status = utils.enum(
     'OK',
     'GenericError', 'InvalidData', 'NotImplemented',
     'Aborted', 'AccessDenied')
-""" :obj:`apiaiassistant.utils.enum`: statuses of the agent """
+""" :obj:`apiai_assistant.utils.enum`: statuses of the agent """
 
 
 class Agent(object):
@@ -21,14 +21,14 @@ class Agent(object):
     Provides methods to instruct the agent on how to respond tu user queries
 
     Args:
-        corpus (:obj:`apiaiassistant.corpus.Corpus`): Corpus to get the outputs from
+        corpus (:obj:`apiai_assistant.corpus.Corpus`): Corpus to get the outputs from
         request (:obj:`dict`, optional): API.ai request
         ssml (boolean, optional, True): if True, will format speech to support SSML
     """
 
     SupportedPermissions = utils.enum(
         'NAME', 'COARSE_LOCATION', 'PRECISE_LOCATION')
-    """ :obj:`apiaiassistant.utils.enum`: permissions supported by the agent """
+    """ :obj:`apiai_assistant.utils.enum`: permissions supported by the agent """
 
     def __init__(self, corpus=None, request=None, ssml=True, *args, **kwargs):
         self.code = Status.OK

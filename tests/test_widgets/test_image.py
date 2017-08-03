@@ -1,7 +1,7 @@
 import unittest
 
-from apiaiassistant.widgets import Button
-from apiaiassistant.widgets import Image
+from apiai_assistant.widgets import Button
+from apiai_assistant.widgets import Image
 
 
 class ImageTestCase(unittest.TestCase):

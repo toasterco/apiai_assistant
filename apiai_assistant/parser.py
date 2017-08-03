@@ -79,7 +79,7 @@ class PayloadParser(object):
     @property
     def is_valid(self):
         """
-        Validation method, called in apiaiassistant.assistant.Assistant.process
+        Validation method, called in apiai_assistant.assistant.Assistant.process
 
         Returns:
             bool: True if the parser is valid. False otherwise

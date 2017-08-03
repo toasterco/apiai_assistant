@@ -1,6 +1,6 @@
 import unittest
 
-from apiaiassistant import utils
+from apiai_assistant import utils
 
 
 class TextToIntTestCase(unittest.TestCase):

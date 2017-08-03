@@ -1,6 +1,6 @@
 """ Utils
 
-Provides utility functions for the modules of the apiaiassistant package """
+Provides utility functions for the modules of the apiai_assistant package """
 
 import re
 

@@ -2,21 +2,21 @@
 Disclaimer
 ==========
 
-This README is a work in progress and some links (such as the PyPi links) and shields won't be available until the official release of the ``apiaiassistant`` package.
+This README is a work in progress and some links (such as the PyPi links) and shields won't be available until the official release of the ``apiai_assistant`` package.
 
 ------------------------------------------
 
 |Logo|
 
-================
- apiaiassistant
-================
+==================
+ API.ai Assistant
+==================
 
 |PyPI-Status| |PyPI-Versions| |Branch-Coverage-Status|
 
 |LICENCE|
 
-``apiaiassistant`` aims to offer developers the easiest and most intuitive way to create smart assistants through API.ai
+``apiai_assistant`` aims to offer developers the easiest and most intuitive way to create smart assistants through API.ai
 
 ------------------------------------------
 
@@ -35,7 +35,7 @@ Latest PyPI stable release
 
 .. code:: sh
 
-    pip install apiaiassistant
+    pip install apiai_assistant
 
 Latest development release on github
 ------------------------------------
@@ -46,7 +46,7 @@ Pull and install in the current directory:
 
 .. code:: sh
 
-    pip install -e git+https://github.com/toasterco/apiaiassistant.git@master#egg=apiaiassistant
+    pip install -e git+https://github.com/toasterco/apiaiassistant.git@master#egg=apiai_assistant
 
 Running tests
 -------------
@@ -59,7 +59,7 @@ Or
 
 .. code:: sh
 
-   nosetests --with-coverage --cover-package=apiaiassistant
+   nosetests --with-coverage --cover-package=apiai_assistant
 
 
 Changelog
@@ -67,18 +67,18 @@ Changelog
 
 The list of all changes is available either on GitHub's Releases:
 |GitHub-Status| or on crawlers such as
-`allmychanges.com <https://allmychanges.com/p/python/apiaiassistant/>`_.
+`allmychanges.com <https://allmychanges.com/p/python/apiai_assistant/>`_.
 
 
 Sample Usage
 ============
 
-See the `apiaiassistant-sample <https://github.com/toasterco/apiaiassistant-sample>`__ project.
+See the `apiai_assistant-sample <https://github.com/toasterco/apiaiassistant-sample>`__ project.
 
 Usage
 =====
 
-``apiaiassistant`` can be used with any web framework
+``apiai_assistant`` can be used with any web framework
 
 Simply declare an ``Assistant``, register your intents with it by decorating them with ``Assistant.intent`` and then process the API.ai POST request with ``Assistant.process``
 
@@ -109,7 +109,7 @@ Registering an intent
 
 Registration of intents is straightforward, write your intent and wrap it with the ``Assistant.intent`` decorator, passing the intent id specified on API.ai (called 'Action') to the decorator.
 
-Each intent takes an ``apiaiassistant.agent.Agent`` instance as parameter
+Each intent takes an ``apiai_assistant.agent.Agent`` instance as parameter
 
 .. code:: python
 
@@ -128,7 +128,7 @@ Writing intents
 Accessing parameters
 ~~~~~~~~~~~~~~~~~~~~
 
-Each agent instance has a ``parser`` attribute that is an instance of the superclassed ``apiaiassistant.parser.PayloadParser``
+Each agent instance has a ``parser`` attribute that is an instance of the superclassed ``apiai_assistant.parser.PayloadParser``
 
 Using ``parser.get`` you can retrieve parameters for your intent and even parse numbers by specifying the type of the parameter to get
 
@@ -151,7 +151,7 @@ If the context was found in the request, its parameters will be returned in a ``
 
 .. code:: python
 
-    from apiaiassistant import utils
+    from apiai_assistant import utils
 
     context = agent.get_contexts('context-name')
     amount = utils.text_to_int(context.get('number'))
@@ -230,7 +230,7 @@ You can also use ``ask_for_confirmation`` to ask the user something and prompt t
 Showing the user
 ~~~~~~~~~~~~~~~~
 
-In its current state, ``apiaiassistant`` only supports integration with *Actions on Google* so only visual responses for AoG will be covered in this section for now.
+In its current state, ``apiai_assistant`` only supports integration with *Actions on Google* so only visual responses for AoG will be covered in this section for now.
 
 Using ``tell`` and ``ask`` only creates simple text speech bubbles in conjunction with spoken speech;
 
@@ -240,7 +240,7 @@ To make use of rich responses, simply create a ``GoogleAssistantWidget`` and use
 
 .. code:: python
 
-    from apiaiassistant.widgets import ImageCardWidget, Image
+    from apiai_assistant.widgets import ImageCardWidget, Image
 
     @myassistant.intent('show-animal-card')
     def show_animal_card(agent):
@@ -260,7 +260,7 @@ For a detailed description of each rich responses available with *Actions on Goo
 Suggesting options to the user
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Suggestions are a form of rich responses but ``apiaiassitant.agent.Agent`` offers a ``suggest`` and ``suggest_raw`` (that behave similaryl to ``tell`` and ``tell_raw`` or ``ask`` and ``ask_raw``) to easily add suggestions.
+Suggestions are a form of rich responses but ``apiai_assitant.agent.Agent`` offers a ``suggest`` and ``suggest_raw`` (that behave similaryl to ``tell`` and ``tell_raw`` or ``ask`` and ``ask_raw``) to easily add suggestions.
 
 .. code:: python
 
@@ -369,7 +369,7 @@ The response object of your agent will be properly formated with the correct for
 Writing a corpus
 ----------------
 
-A corpus is a large and structured set of texts, in the contexts of ``apiaiassistant``, corpora are JSON files containing all outputs of your agent.
+A corpus is a large and structured set of texts, in the contexts of ``apiai_assistant``, corpora are JSON files containing all outputs of your agent.
 
 When rendering an output via ``.tell()``, ``.ask()``, ``.suggest()``, or ``.ask_for_confirmation()``, the agent looks up the output id within the corpus and **randomly selects a choice from the list value for that output id**, thus making your agent responses less predictable and more organic.
 
@@ -455,9 +455,9 @@ If you specified a magic key when declaring your assistant, you can also pass th
 Responding to the POST request
 ------------------------------
 
-Processing a request through an ``assistant`` returns an ``apiaiassistant.agent.Agent`` instance of which you can simply render the ``response`` attribute.
+Processing a request through an ``assistant`` returns an ``apiai_assistant.agent.Agent`` instance of which you can simply render the ``response`` attribute.
 
-If something went wrong during the intent execution, the ``code`` attribute of the agent instance will be set to one of the error statuses (see ``apiaiassistant.agent.Status``) and the ``error_message`` attribute will describe what went wrong.
+If something went wrong during the intent execution, the ``code`` attribute of the agent instance will be set to one of the error statuses (see ``apiai_assistant.agent.Status``) and the ``error_message`` attribute will describe what went wrong.
 
 The ``response`` attribute will also be appropriately set with the API.ai error format so you can render the response regardless of the agent status code.
 
@@ -543,7 +543,7 @@ Documentation
 Contributions
 =============
 
-All source code is hosted on `GitHub <https://github.com/ToasterCo/apiaiassistant>`__.
+All source code is hosted on `GitHub <https://github.com/ToasterCo/apiai_assistant>`__.
 Contributions are welcome.
 
 See the
@@ -569,10 +569,10 @@ README structure and style based on `tqdm <https://pypi.python.org/pypi/tqdm>`__
 
 `*` Original author
 
-.. |Logo| image:: images/apiaiassistant-logo.png
+.. |Logo| image:: images/apiai_assistant-logo.png
    :height: 180px
    :width: 180 px
-   :alt: apiaiassistant logo
+   :alt: apiai_assistant logo
 
 .. |Branch-Coverage-Status| image:: https://codecov.io/github/toasterco/apiaiassistant/coverage.svg?branch=master
    :target: https://codecov.io/github/toasterco/apiaiassistant?branch=master
@@ -586,14 +586,14 @@ README structure and style based on `tqdm <https://pypi.python.org/pypi/tqdm>`__
 .. |GitHub-Stars| image:: https://img.shields.io/github/stars/toasterco/apiaiassistant.svg
    :target: https://github.com/toasterco/apiaiassistant/stargazers
 
-.. |PyPI-Status| image:: https://img.shields.io/pypi/v/apiaiassistant.svg
-   :target: https://pypi.python.org/pypi/apiaiassistant
+.. |PyPI-Status| image:: https://img.shields.io/pypi/v/apiai_assistant.svg
+   :target: https://pypi.python.org/pypi/apiai_assistant
 
-.. |PyPI-Downloads| image:: https://img.shields.io/pypi/dm/apiaiassistant.svg
-   :target: https://pypi.python.org/pypi/apiaiassistant
+.. |PyPI-Downloads| image:: https://img.shields.io/pypi/dm/apiai_assistant.svg
+   :target: https://pypi.python.org/pypi/apiai_assistant
 
-.. |PyPI-Versions| image:: https://img.shields.io/pypi/pyversions/apiaiassistant.svg
-   :target: https://pypi.python.org/pypi/apiaiassistant
+.. |PyPI-Versions| image:: https://img.shields.io/pypi/pyversions/apiai_assistant.svg
+   :target: https://pypi.python.org/pypi/apiai_assistant
 
-.. |LICENCE| image:: https://img.shields.io/pypi/l/apiaiassistant.svg
+.. |LICENCE| image:: https://img.shields.io/pypi/l/apiai_assistant.svg
    :target: https://raw.githubusercontent.com/toasterco/apiaiassistant/master/LICENCE
