@@ -106,10 +106,6 @@ Usage
 FAQ and Known Issues
 ====================
 
-- How can I get the user's location or name?
-
-  ``Unfortunately, permissions aren't supported as of yet in Alpha``
-
 - Can I use my agent for all API.ai supported integrations ?
 
   ``Only Actions on Google is supported as of yet in Alpha.``
@@ -200,8 +196,6 @@ Ranked by contributions.
 -  Zack Dibe (Zack--) *
 -  Dominic Santos (dominicglenn)
 
-
-README structure and style based on `tqdm <https://pypi.python.org/pypi/tqdm>`__.
 
 `*` Original author
 

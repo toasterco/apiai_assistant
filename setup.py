@@ -10,14 +10,14 @@ with open(path.join(HERE, 'README.rst'), encoding='utf-8') as f:
     LONG_DESCRIPTION = f.read()
 
 setup(
-    name='apiaiassistant',
+    name='apiai_assistant',
 
     version=VERSION,
 
     description='Create API.ai agents in a heartbeat',
     long_description=LONG_DESCRIPTION,
 
-    url='https://github.com/ToasterLTD/apiaiassistant',
+    url='https://github.com/toasterco/apiaiassistant',
 
     author='Zack Dibe',
     author_email='contact@zackdibe.com',
@@ -26,7 +26,7 @@ setup(
     maintainer_email='developers@toasterltd.com',
 
     platforms=['any'],
-    packages=['apiaiassistant'],
+    packages=['apiai_assistant'],
 
     license='MIT',
 
@@ -51,7 +51,7 @@ setup(
 
     ],
 
-    keywords='apiai actionsongoogle voice home',
+    keywords='apiai actionsongoogle alexa messenger voice home',
 
-    py_modules=["apiaiassistant"],
+    py_modules=["apiai_assistant"],
 )
