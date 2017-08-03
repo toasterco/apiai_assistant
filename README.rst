@@ -1,11 +1,3 @@
-==========
-Disclaimer
-==========
-
-This README is a work in progress and some links (such as the PyPi links) and shields won't be available until the official release of the ``apiai_assistant`` package.
-
-------------------------------------------
-
 |Logo|
 
 ==================
