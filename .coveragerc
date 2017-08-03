@@ -1,6 +1,6 @@
 [run]
 branch = True
-source = apiaiassistant
+source = apiai_assistant
 
 [report]
 exclude_lines =
