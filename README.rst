@@ -38,7 +38,7 @@ Pull and install in the current directory:
 
 .. code:: sh
 
-    pip install -e git+https://github.com/toasterco/apiaiassistant.git@master#egg=apiai_assistant
+    pip install -e git+https://github.com/toasterco/apiai_assistant.git@master#egg=apiai_assistant
 
 Running tests
 -------------
@@ -65,7 +65,7 @@ The list of all changes is available either on GitHub's Releases:
 Sample Usage
 ============
 
-See the `apiai_assistant-sample <https://github.com/toasterco/apiaiassistant-sample>`__ project.
+See the `apiai_assistant-sample <https://github.com/toasterco/apiai_assistant-sample>`__ project.
 
 Usage
 =====
@@ -103,7 +103,7 @@ FAQ and Known Issues
   ``Only Actions on Google is supported as of yet in Alpha.``
 
 If you come across any other difficulties, browse/open issues
-`here <https://github.com/toasterco/apiaiassistant/issues?q=is%3Aissue>`__.
+`here <https://github.com/toasterco/apiai_assistant/issues?q=is%3Aissue>`__.
 
 To do
 =====
@@ -171,7 +171,7 @@ All source code is hosted on `GitHub <https://github.com/ToasterCo/apiai_assista
 Contributions are welcome.
 
 See the
-`CONTRIBUTING <https://raw.githubusercontent.com/toasterco/apiaiassistant/master/CONTRIBUTING.md>`__
+`CONTRIBUTING <https://raw.githubusercontent.com/toasterco/apiai_assistant/master/CONTRIBUTING.md>`__
 file for more information.
 
 
@@ -196,17 +196,17 @@ Ranked by contributions.
    :width: 180 px
    :alt: apiai_assistant logo
 
-.. |Branch-Coverage-Status| image:: https://codecov.io/github/toasterco/apiaiassistant/coverage.svg?branch=master
-   :target: https://codecov.io/github/toasterco/apiaiassistant?branch=master
+.. |Branch-Coverage-Status| image:: https://codecov.io/github/toasterco/apiai_assistant/coverage.svg?branch=master
+   :target: https://codecov.io/github/toasterco/apiai_assistant?branch=master
 
-.. |GitHub-Status| image:: https://img.shields.io/github/tag/toasterco/apiaiassistant.svg?maxAge=2592000
-   :target: https://github.com/toasterco/apiaiassistant/releases
+.. |GitHub-Status| image:: https://img.shields.io/github/tag/toasterco/apiai_assistant.svg?maxAge=2592000
+   :target: https://github.com/toasterco/apiai_assistant/releases
 
-.. |GitHub-Forks| image:: https://img.shields.io/github/forks/toasterco/apiaiassistant.svg
-   :target: https://github.com/toasterco/apiaiassistant/network
+.. |GitHub-Forks| image:: https://img.shields.io/github/forks/toasterco/apiai_assistant.svg
+   :target: https://github.com/toasterco/apiai_assistant/network
 
-.. |GitHub-Stars| image:: https://img.shields.io/github/stars/toasterco/apiaiassistant.svg
-   :target: https://github.com/toasterco/apiaiassistant/stargazers
+.. |GitHub-Stars| image:: https://img.shields.io/github/stars/toasterco/apiai_assistant.svg
+   :target: https://github.com/toasterco/apiai_assistant/stargazers
 
 .. |PyPI-Status| image:: https://img.shields.io/pypi/v/apiai_assistant.svg
    :target: https://pypi.python.org/pypi/apiai_assistant
@@ -218,4 +218,4 @@ Ranked by contributions.
    :target: https://pypi.python.org/pypi/apiai_assistant
 
 .. |LICENCE| image:: https://img.shields.io/pypi/l/apiai_assistant.svg
-   :target: https://raw.githubusercontent.com/toasterco/apiaiassistant/master/LICENCE
+   :target: https://raw.githubusercontent.com/toasterco/apiai_assistant/master/LICENCE
