@@ -73,29 +73,29 @@ See the `apiai_assistant-sample <https://github.com/toasterco/apiai_assistant-sa
 Further reading
 ---------------
 
-* `Declaring an Assistant <documentation/usage_guide.rst#declaringanAssistant>`__
+* `Declaring an Assistant <https://github.com/toasterco/apiai_assistant/tree/master/documentation/usage_guide.rst#declaringanAssistant>`__
 
-* `Registering an intent <documentation/usage_guide.rst#registeringanintent>`__
+* `Registering an intent <https://github.com/toasterco/apiai_assistant/tree/master/documentation/usage_guide.rst#registeringanintent>`__
 
-* `Writing intents <documentation/usage_guide.rst#writingintents>`__
+* `Writing intents <https://github.com/toasterco/apiai_assistant/tree/master/documentation/usage_guide.rst#writingintents>`__
 
-  * `Accessing parameters <documentation/usage_guide.rst#accessingparameters>`__
+  * `Accessing parameters <https://github.com/toasterco/apiai_assistant/tree/master/documentation/usage_guide.rst#accessingparameters>`__
 
-  * `Accessing context parameters <documentation/usage_guide.rst#accessingcontextparameters>`__
+  * `Accessing context parameters <https://github.com/toasterco/apiai_assistant/tree/master/documentation/usage_guide.rst#accessingcontextparameters>`__
 
-  * `Telling the user <documentation/usage_guide.rst#tellingtheuser>`__
+  * `Telling the user <https://github.com/toasterco/apiai_assistant/tree/master/documentation/usage_guide.rst#tellingtheuser>`__
 
-  * `Asking the user <documentation/usage_guide.rst#askingtheuser>`__
+  * `Asking the user <https://github.com/toasterco/apiai_assistant/tree/master/documentation/usage_guide.rst#askingtheuser>`__
 
-  * `Showing the user <documentation/usage_guide.rst#showingtheuser>`__
+  * `Showing the user <https://github.com/toasterco/apiai_assistant/tree/master/documentation/usage_guide.rst#showingtheuser>`__
 
-  * `Suggesting options to the user <documentation/usage_guide.rst#suggestingoptionstotheuser>`__
+  * `Suggesting options to the user <https://github.com/toasterco/apiai_assistant/tree/master/documentation/usage_guide.rst#suggestingoptionstotheuser>`__
 
-  * `Adding contexts <documentation/usage_guide.rst#addingcontexts>`__
+  * `Adding contexts <https://github.com/toasterco/apiai_assistant/tree/master/documentation/usage_guide.rst#addingcontexts>`__
 
-  * `Requesting permissions <documentation/usage_guide.rst#requestingpermissions>`__
+  * `Requesting permissions <https://github.com/toasterco/apiai_assistant/tree/master/documentation/usage_guide.rst#requestingpermissions>`__
 
-  * `Aborting <documentation/usage_guide.rst#aborting>`__
+  * `Aborting <https://github.com/toasterco/apiai_assistant/tree/master/documentation/usage_guide.rst#aborting>`__
 
 
 FAQ and Known Issues
@@ -123,7 +123,7 @@ To do
 Documentation
 =============
 
-All the doc can be found over `here <documentation/private_api.rst>`__.
+All the doc can be found over `here <https://github.com/toasterco/apiai_assistant/tree/master/documentation/private_api.rst>`__.
 
 Contributions
 =============
