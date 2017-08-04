@@ -27,7 +27,7 @@ Latest PyPI stable release
 
 .. code:: sh
 
-    pip install apiai_assistant
+    pip install apiai-assistant
 
 Latest development release on github
 ------------------------------------
