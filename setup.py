@@ -1,9 +1,9 @@
 
-from setuptools import setup
+from distutils.core import setup
 from codecs import open
 from os import path
 
-VERSION = '1.0.0'
+VERSION = '0.1.0'
 
 HERE = path.abspath(path.dirname(__file__))
 with open(path.join(HERE, 'README.rst'), encoding='utf-8') as f:
