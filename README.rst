@@ -156,13 +156,13 @@ Ranked by contributions.
 .. |Branch-Coverage-Status| image:: https://codecov.io/github/toasterco/apiai_assistant/coverage.svg?branch=master
    :target: https://codecov.io/github/toasterco/apiai_assistant?branch=master
 
-.. |GitHub-Status| image:: https://img.shields.io/github/tag/toasterco/apiai_assistant.svg?maxAge=2592000
+.. |GitHub-Status| image:: https://img.shields.io/github/tag/toasterco/apiaiassistant.svg?maxAge=2592000
    :target: https://github.com/toasterco/apiai_assistant/releases
 
-.. |GitHub-Forks| image:: https://img.shields.io/github/forks/toasterco/apiai_assistant.svg
+.. |GitHub-Forks| image:: https://img.shields.io/github/forks/toasterco/apiaiassistant.svg
    :target: https://github.com/toasterco/apiai_assistant/network
 
-.. |GitHub-Stars| image:: https://img.shields.io/github/stars/toasterco/apiai_assistant.svg
+.. |GitHub-Stars| image:: https://img.shields.io/github/stars/toasterco/apiaiassistant.svg
    :target: https://github.com/toasterco/apiai_assistant/stargazers
 
 .. |PyPI-Status| image:: https://img.shields.io/pypi/v/apiai_assistant.svg
