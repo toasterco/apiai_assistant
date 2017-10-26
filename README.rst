@@ -148,7 +148,7 @@ Ranked by contributions.
 
 `*` Original author
 
-.. |Logo| image:: images/apiai_assistant-logo.png
+.. |Logo| image:: https://raw.githubusercontent.com/toasterco/apiai_assistant/master/images/apiai_assistant-logo.png
    :height: 180px
    :width: 180 px
    :alt: apiai_assistant logo

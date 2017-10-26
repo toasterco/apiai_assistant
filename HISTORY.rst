@@ -23,3 +23,8 @@ Features:
 
   - Permission Requests
 
+
+0.1.1 (Alpha)
++++++++++++++++++++
+
+- Fix README logo link

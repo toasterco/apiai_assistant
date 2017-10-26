@@ -3,7 +3,7 @@ from setuptools import setup
 from codecs import open
 from os import path
 
-VERSION = '0.1.0'
+VERSION = '0.1.1'
 
 HERE = path.abspath(path.dirname(__file__))
 with open(path.join(HERE, 'README.rst'), encoding='utf-8') as f:
@@ -17,7 +17,7 @@ setup(
     description='Create API.ai agents in a heartbeat',
     long_description=LONG_DESCRIPTION,
 
-    url='https://github.com/toasterco/apiaiassistant',
+    url='https://github.com/toasterco/apiai_assistant',
 
     author='Zack Dibe',
     author_email='contact@zackdibe.com',
