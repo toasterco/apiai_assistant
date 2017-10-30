@@ -28,3 +28,8 @@ Features:
 +++++++++++++++++++
 
 - Fix README logo link
+
+0.1.2 (Alpha)
++++++++++++++++++++
+
+- Fix bug with confirmations (typo)

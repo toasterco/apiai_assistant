@@ -55,7 +55,7 @@ class Corpus(object):
 
             self.corpus = data['corpus']
             self.suggestions = data.get('suggestions')
-            self.condirmations = data.get(
+            self.confirmations = data.get(
                 'confirmations', self.DEFAULT_CONFIRMATIONS)
 
     def __getitem__(self, key):
