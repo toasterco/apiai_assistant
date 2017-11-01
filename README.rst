@@ -105,6 +105,10 @@ FAQ and Known Issues
 
   ``Only Actions on Google is supported as of yet in Alpha.``
 
+- My webhook does not receive any request from API.ai
+
+  ``Make sure to set the magic-key header in the fulfillment section of API.ai. Its value must be the same as the one you initialized your Assistant object with.``
+
 If you come across any other difficulties, browse/open issues
 `here <https://github.com/toasterco/apiai_assistant/issues?q=is%3Aissue>`__.
 
