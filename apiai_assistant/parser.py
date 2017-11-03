@@ -10,6 +10,11 @@ from . import utils
 DEFAULT_LOCALE = 'en-US'
 DEFAULT_USER_ID = 'APIAITEST'
 
+PARSER_SHAPES = {
+    'GoogleAssistantParser': ['result', 'originalRequest'],
+    'AmazonAlexaParser': ['request', 'session', 'context'],
+}
+
 
 class User(object):
     """
@@ -35,6 +40,7 @@ class User(object):
         self.family_name = family_name
         self.device = device
         self.locale = locale
+
 
 class Device(object):
     """
@@ -79,7 +85,7 @@ class PayloadParser(object):
     @property
     def is_valid(self):
         """
-        Validation method, called in apiai_assistant.assistant.Assistant.process
+        Validation method, called in apiaiassistant.assistant.Assistant.process
 
         Returns:
             bool: True if the parser is valid. False otherwise
@@ -119,6 +125,12 @@ class PayloadParser(object):
                 value = map(utils.text_to_int, value)
             else:
                 value = default if not value else utils.text_to_int(value)
+
+        elif _type == self.PARAM_TYPES.LIST:
+            if isinstance(value, list):
+                return value
+            else:
+                return value.split(' ')
 
         return value
 
@@ -227,3 +239,98 @@ class GoogleAssistantParser(PayloadParser):
             given_name=user_data.get('profile', {}).get('givenName'),
             family_name=user_data.get('profile', {}).get('familyName'),
             device=device)
+
+
+class AmazonAlexaParser(PayloadParser):
+    """ Parser for the Amazon Alexa integration """
+
+    CAPABILITIES = {
+        'screen': 'Display',
+        'audio': 'AudioPlayer'
+    }
+
+    PERMISSIONS = {
+        'name': 'NAME',
+        'coarse_loc': 'DEVICE_COARSE_LOCATION',
+        'precise_loc': 'DEVICE_PRECISE_LOCATION',
+    }
+
+    @property
+    def is_valid(self):
+        return not not self.request
+
+    @property
+    def action(self):
+        return self.request['intent']['name']
+
+    @property
+    def parameters(self):
+        return self.request.get('intent', {}).get('slots', {})
+
+    def get_contexts(self, name=None):
+        """ Get the contexts of the request or the context with name `name`
+
+        To do
+        """
+        return []
+
+    @property
+    def request(self):
+        return self.data.get('request', {})
+
+    def has_screen_capability(self):
+        return self.CAPABILITIES['screen'] in self.capabilities
+
+    def has_audio_capability(self):
+        return self.CAPABILITIES['audio'] in self.capabilities
+
+    @property
+    def capabilities(self):
+        try:
+            return self.data['context']['System']['device']['supportedInterfaces'].keys()
+        except KeyError:
+            return []
+
+    @property
+    def user(self):
+        if self._user is None:
+            self._user = self._init_user()
+        return self._user
+
+    @property
+    def device(self):
+        if self._user is None:
+            self._user = self._init_user()
+        return self._user.device
+
+    def _init_user(self):
+        """
+        Initialise the user instance.
+
+        If the user object can't be found in the request it is assumed
+        that we are in a test environment and thus use dummy strings
+        """
+
+        data = self.data.get('context', {}).get('System', {})
+        device_data = data.get('device', {})
+        user_data = data.get('user', {})
+
+        device = Device(
+            device_id=device_data.get('deviceId'))
+
+        return User(
+            user_id=user_data.get('userId', DEFAULT_USER_ID),
+            device=device)
+
+
+PARSERS = {
+    'GoogleAssistantParser': GoogleAssistantParser,
+    'AmazonAlexaParser': AmazonAlexaParser
+}
+
+
+def get_parser(request):
+    for key, shape in PARSER_SHAPES.items():
+        if all(elem in request for elem in shape):
+            return PARSERS[key](request)
+    return None

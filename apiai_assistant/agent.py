@@ -38,7 +38,7 @@ class Agent(object):
         self.corpus = corpus
         self.parser = None
         if request:
-            self.parser = parser.GoogleAssistantParser(request)
+            self.parser = parser.get_parser(request)
 
         self.response = Response()
 
