@@ -1,3 +1,5 @@
+import json
+import mock
 import unittest
 
 from apiai_assistant.assistant import Assistant
@@ -7,6 +9,12 @@ from tests import get_dummy_request
 
 
 class AssistantTestCase(unittest.TestCase):
+    def test_corpus_init(self):
+        data = {'corpus': {'foo': ['bar']}}
+        with mock.patch("__builtin__.open", mock.mock_open(read_data=json.dumps(data))) as m:
+            ass = Assistant(corpus='dummystring')
+            self.assertTrue(ass.corpus is not None)
+
     def test_intent(self):
         ass = Assistant()
 
@@ -41,22 +49,14 @@ class AssistantTestCase(unittest.TestCase):
     def test_process_invalid(self):
         ass = Assistant()
 
-        @ass.intent('foo')
-        def bar(agent):
-            agent.tell_raw('foobar')
-
         request = get_dummy_request()
         request['result']['action'] = 'foo'
         agent = ass.process(request)
-        self.assertEqual(len(agent.response._messages), 2)
+        self.assertEqual(len(agent.response._messages), 1)
         self.assertEqual(
             agent.response._messages,
             [
-                agent.response.initial_message,
-                {'platform': 'google',
-                 'ssml': '<speak>foobar</speak>',
-                 'displayText': 'foobar',
-                 'type': 'simple_response'}
+                agent.response.initial_message
             ]
         )
 
