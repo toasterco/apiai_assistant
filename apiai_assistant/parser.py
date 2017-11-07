@@ -12,7 +12,7 @@ DEFAULT_USER_ID = 'APIAITEST'
 
 PARSER_SHAPES = {
     'GoogleAssistantParser': ['result', 'originalRequest'],
-    'AmazonAlexaParser': ['request', 'session', 'context'],
+    'AlexaAssistantParser': ['request', 'session', 'context'],
 }
 
 
@@ -241,7 +241,7 @@ class GoogleAssistantParser(PayloadParser):
             device=device)
 
 
-class AmazonAlexaParser(PayloadParser):
+class AlexaAssistantParser(PayloadParser):
     """ Parser for the Amazon Alexa integration """
 
     CAPABILITIES = {
@@ -270,9 +270,20 @@ class AmazonAlexaParser(PayloadParser):
     def get_contexts(self, name=None):
         """ Get the contexts of the request or the context with name `name`
 
-        To do
+        Args:
+            name (str, optional): name of the context to get
+        Returns:
+            list of contexts if `name` is None, otherwise the context with name
+            `name` or an empty :obj:`dict` if it couldn't be found
         """
-        return []
+
+        contexts = self.request.get('contexts', [])
+        if name:
+            for context in contexts:
+                if context['name'] == name:
+                    return context['parameters']
+            return {}
+        return contexts
 
     @property
     def request(self):
@@ -324,13 +335,15 @@ class AmazonAlexaParser(PayloadParser):
 
 
 PARSERS = {
-    'GoogleAssistantParser': GoogleAssistantParser,
-    'AmazonAlexaParser': AmazonAlexaParser
+    'APIAIConsole': GoogleAssistantParser,
+    'GoogleAssistant': GoogleAssistantParser,
+    'AlexaAssistant': AlexaAssistantParser
 }
 
 
-def get_parser(request):
-    for key, shape in PARSER_SHAPES.items():
-        if all(elem in request for elem in shape):
-            return PARSERS[key](request)
-    return None
+def get_parser(origin, request):
+    parser = PARSERS.get(origin)
+    if parser:
+        parser = parser(request)
+    return parser
+

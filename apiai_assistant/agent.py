@@ -7,13 +7,27 @@ implementation to be able to interact with the user through the agent """
 from . import utils
 from . import parser
 from . import widgets
-
+# `import response` at the end of the file
 
 Status = utils.enum(
     'OK',
     'GenericError', 'InvalidData', 'NotImplemented',
     'Aborted', 'AccessDenied')
 """ :obj:`apiai_assistant.utils.enum`: statuses of the agent """
+
+
+REQUEST_SHAPES = {
+    'GoogleAssistant': ['result', 'originalRequest'],
+    'APIAIConsole': ['result', 'sessionId'],
+    'AlexaAssistant': ['request', 'session', 'context'],
+}
+
+
+def get_origin(request):
+    for origin, shape in REQUEST_SHAPES.items():
+        if all(element in request for element in shape):
+            return origin
+    return None
 
 
 class Agent(object):
@@ -37,10 +51,13 @@ class Agent(object):
 
         self.corpus = corpus
         self.parser = None
-        if request:
-            self.parser = parser.get_parser(request)
+        self.origin = None
+        self.response = None
 
-        self.response = Response()
+        if request:
+            self.origin = get_origin(request)
+            self.parser = parser.get_parser(self.origin, request)
+            self.response = response.get_response(self.origin)
 
     def __repr__(self):
         return '<Agent: ({}{})>'.format(
@@ -183,83 +200,5 @@ class Agent(object):
         self.suggest_raw(self.corpus.get_confirmation())
 
 
-class Response(object):
-    """ Abstraction to build API.ai compatible responses """
-
-    PERMISSIONS = {
-        Agent.SupportedPermissions.NAME: 'NAME',
-        Agent.SupportedPermissions.COARSE_LOCATION: 'DEVICE_COARSE_LOCATION',
-        Agent.SupportedPermissions.PRECISE_LOCATION: 'DEVICE_PRECISE_LOCATION'
-    }
-
-    def __init__(self):
-        self.code = Status.OK
-        self.error_message = None
-        self.expect_user_response = False
-        self._messages = [
-            self.initial_message
-        ]
-        self._permissions = []
-        self._contexts = []
-
-    @property
-    def initial_message(self):
-        return {'type': 0, 'speech': ''}
-
-    def abort(self, error_message, code=Status.GenericError):
-        self.code = code
-        self.error_message = error_message
-
-    def close_mic(self):
-        self.expect_user_response = False
-
-    def open_mic(self):
-        self.expect_user_response = True
-
-    def add_message(self, message, position=None):
-        if position is not None:
-            self._messages.insert(position, message)
-        else:
-            self._messages.append(message)
-
-    def add_context(self, context, position=None):
-        if position is not None:
-            self._contexts.insert(position, context)
-        else:
-            self._contexts.append(context)
-
-    def add_permission(self, reason, permissions):
-        self._permissions.append((reason, [self.PERMISSIONS[p] for p in permissions]))
-
-    def to_dict(self):
-        if self.code != Status.OK:
-            return {'error': '400'}
-
-        payload = {
-            'messages': self._messages,
-            'data': {
-                'google': {
-                    'expectUserResponse': self.expect_user_response
-                }
-            }
-        }
-
-        if self._contexts:
-            payload['contextOut'] = self._contexts
-
-        if self._permissions:
-            reason = self._permissions[0][0]
-            permissions = list(
-                {p for _, perms in self._permissions for p in perms})
-
-            payload['data']['google']['systemIntent'] = {
-                "intent": "actions.intent.PERMISSION",
-                "data": {
-                    "@type": "type.googleapis.com/google.actions.v2.PermissionValueSpec",
-                    "optContext": reason,
-                    "permissions": permissions
-                }
-
-            }
-
-        return payload
+# Cyclic import
+import response
