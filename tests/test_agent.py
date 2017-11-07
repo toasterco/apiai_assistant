@@ -4,7 +4,7 @@ import unittest
 from tests import mocked_init_corpus
 
 from apiai_assistant.agent import Agent
-from apiai_assistant import response
+from apiai_assistant.agent import get_origin
 from apiai_assistant.agent import Status
 from apiai_assistant.corpus import Corpus
 from apiai_assistant.widgets import LinkOutChipWidget
@@ -20,8 +20,20 @@ FAKE_GOOGLE_ASSISTANT_REQUEST = {
     'originalRequest': {}
 }
 
+FAKE_AMAZON_ALEXA_REQUEST = {
+    'session': {},
+    'context': {},
+    'request': {}
+}
+
+
 @mock.patch('apiai_assistant.corpus.Corpus.init_corpus', mocked_init_corpus(FAKE_CORPUS))
 class AgentTestCase(unittest.TestCase):
+    def test_get_origin(self):
+        self.assertEqual('GoogleAssistant', get_origin(FAKE_GOOGLE_ASSISTANT_REQUEST))
+        self.assertEqual('AmazonAlexa', get_origin(FAKE_AMAZON_ALEXA_REQUEST))
+        self.assertEqual(None, get_origin({'foo': 'bar'}))
+
     def test_repr(self):
         agent = Agent(request=FAKE_GOOGLE_ASSISTANT_REQUEST)
         self.assertEqual(
@@ -59,7 +71,7 @@ class AgentTestCase(unittest.TestCase):
             request=FAKE_GOOGLE_ASSISTANT_REQUEST, corpus=Corpus('foo.json'))
         key = 'foo'
         context = {'name': 'bar'}
-        agent.tell(key, context)
+        agent.tell(key, context=context)
         payload = agent.response.to_dict()
         self.assertFalse(payload['data']['google']['expectUserResponse'])
         self.assertEqual(len(payload['messages']), 2)
@@ -71,6 +83,28 @@ class AgentTestCase(unittest.TestCase):
                     'displayText': FAKE_CORPUS['corpus'][key][0],
                     'ssml': '<speak>{}</speak>'.format(
                         FAKE_CORPUS['corpus'][key][0].format(context)),
+                    'platform': 'google',
+                    'type': 'simple_response'
+                }
+            ]
+        )
+
+    def test_tell_no_context(self):
+        agent = Agent(
+            request=FAKE_GOOGLE_ASSISTANT_REQUEST, corpus=Corpus('foo.json'))
+        key = 'foo'
+        agent.tell(key)
+        payload = agent.response.to_dict()
+        self.assertFalse(payload['data']['google']['expectUserResponse'])
+        self.assertEqual(len(payload['messages']), 2)
+        self.assertEqual(
+            payload['messages'],
+            [
+                agent.response.initial_message,
+                {
+                    'displayText': FAKE_CORPUS['corpus'][key][0],
+                    'ssml': '<speak>{}</speak>'.format(
+                        FAKE_CORPUS['corpus'][key][0]),
                     'platform': 'google',
                     'type': 'simple_response'
                 }
@@ -159,6 +193,22 @@ class AgentTestCase(unittest.TestCase):
                     'platform': 'google',
                     'type': 'suggestion_chips'
                 }
+            ]
+        )
+
+    def test_suggest_notfound(self):
+        agent = Agent(
+            request=FAKE_GOOGLE_ASSISTANT_REQUEST, corpus=Corpus('foo.json'))
+        key = 'confirmation'[::-1]
+        self.assertTrue(key not in agent.corpus)
+
+        agent.suggest(key)
+        payload = agent.response.to_dict()
+        self.assertEqual(len(payload['messages']), 1)
+        self.assertEqual(
+            payload['messages'],
+            [
+                agent.response.initial_message
             ]
         )
 
