@@ -19,7 +19,7 @@ Status = utils.enum(
 REQUEST_SHAPES = {
     'GoogleAssistant': ['result', 'originalRequest'],
     'APIAIConsole': ['result', 'sessionId'],
-    'AlexaAssistant': ['request', 'session', 'context'],
+    'AmazonAlexa': ['request', 'session', 'context'],
 }
 
 

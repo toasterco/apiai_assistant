@@ -115,7 +115,7 @@ class GoogleAssistantResponse(BaseResponse):
         return payload
 
 
-class AlexaAssistantResponse(BaseResponse):
+class AmazonAlexaResponse(BaseResponse):
     def to_dict(self):
         return {'data': []}
 
@@ -123,7 +123,7 @@ class AlexaAssistantResponse(BaseResponse):
 RESPONSES = {
     'APIAIConsole': GoogleAssistantResponse,
     'GoogleAssistant': GoogleAssistantResponse,
-    'AlexaAssistant': AlexaAssistantResponse
+    'AmazonAlexa': AmazonAlexaResponse
 }
 
 

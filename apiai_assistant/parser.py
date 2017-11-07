@@ -10,11 +10,6 @@ from . import utils
 DEFAULT_LOCALE = 'en-US'
 DEFAULT_USER_ID = 'APIAITEST'
 
-PARSER_SHAPES = {
-    'GoogleAssistantParser': ['result', 'originalRequest'],
-    'AlexaAssistantParser': ['request', 'session', 'context'],
-}
-
 
 class User(object):
     """
@@ -241,7 +236,7 @@ class GoogleAssistantParser(PayloadParser):
             device=device)
 
 
-class AlexaAssistantParser(PayloadParser):
+class AmazonAlexaParser(PayloadParser):
     """ Parser for the Amazon Alexa integration """
 
     CAPABILITIES = {
@@ -337,7 +332,7 @@ class AlexaAssistantParser(PayloadParser):
 PARSERS = {
     'APIAIConsole': GoogleAssistantParser,
     'GoogleAssistant': GoogleAssistantParser,
-    'AlexaAssistant': AlexaAssistantParser
+    'AmazonAlexa': AmazonAlexaParser
 }
 
 
