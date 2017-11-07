@@ -1,3 +1,4 @@
+import json
 import mock
 import unittest
 
@@ -26,17 +27,31 @@ class CorpusTestCase(unittest.TestCase):
         self.assertEqual(c['foo'], 'bar')
         self.assertEqual(c['abc'], None)
 
-    @mock.patch('apiai_assistant.corpus.Corpus.init_corpus',
-                mocked_init_corpus({'corpus': {'foo': ['bar']}}))
     def test_init_corpus(self):
-        c = Corpus('dummystring')
-        c.corpus = None
-        c.confirmations = None
-        self.assertTrue('foo' in c)
-        self.assertTrue(c.confirmations, Corpus.DEFAULT_CONFIRMATIONS)
+        data = {'corpus': {'foo': ['bar']}}
+        with mock.patch("__builtin__.open", mock.mock_open(read_data=json.dumps(data))) as m:
+            c = Corpus('dummystring')
+            self.assertTrue('foo' in c)
+            self.assertEqual(c.confirmations, Corpus.DEFAULT_CONFIRMATIONS)
+            self.assertEqual(c.suggestions, None)
 
-        c.corpus = None
-        self.assertEqual(c['foo'], 'bar')
+            c.corpus = None
+            self.assertEqual(c['foo'], 'bar')
+
+    def test_corpus_invalid(self):
+        data = {'foo': ['bar']}
+        with mock.patch("__builtin__.open", mock.mock_open(read_data=json.dumps(data))) as m:
+            with self.assertRaises(ValueError):
+                c = Corpus('dummystring')
+
+    def test_confirmation(self):
+        data = {'corpus': {'foo': ['bar']}}
+        with mock.patch("__builtin__.open", mock.mock_open(read_data=json.dumps(data))) as m:
+            c = Corpus('dummystring')
+            c.corpus = None
+            confirmation = c.get_confirmation()
+            self.assertTrue(confirmation in Corpus.DEFAULT_CONFIRMATIONS)
+
 
 if __name__ == '__main__':
     unittest.main()
