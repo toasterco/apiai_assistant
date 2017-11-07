@@ -92,10 +92,8 @@ class GoogleAssistantResponse(BaseResponse):
             return self.error_payload
 
         payload['data'] = {
-            'data': {
-                'google': {
-                    'expect_user_response': self.expect_user_response
-                }
+            'google': {
+                'expectUserResponse': self.expect_user_response
             }
         }
 
@@ -130,7 +128,7 @@ RESPONSES = {
 
 
 def get_response(origin):
-    response = RESPONSES.get(origin)
+    response = RESPONSES.get(origin, BaseResponse)
     if response:
         response = response()
     return response

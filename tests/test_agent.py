@@ -3,8 +3,8 @@ import unittest
 
 from tests import mocked_init_corpus
 
-from apiai_assistant.agent import Response
 from apiai_assistant.agent import Agent
+from apiai_assistant import response
 from apiai_assistant.agent import Status
 from apiai_assistant.corpus import Corpus
 from apiai_assistant.widgets import LinkOutChipWidget
@@ -15,107 +15,15 @@ FAKE_CORPUS = {
     "suggestions": {'confirmation': [['Yes', 'No']]}
 }
 
-
-class ResponseTestCase(unittest.TestCase):
-    def test_open_mic(self):
-        r = Response()
-        self.assertFalse(r.to_dict()['data']['google']['expectUserResponse'])
-        r.open_mic()
-        self.assertTrue(r.to_dict()['data']['google']['expectUserResponse'])
-
-    def test_close_mic(self):
-        r = Response()
-        r.open_mic()
-        self.assertTrue(r.to_dict()['data']['google']['expectUserResponse'])
-        r.close_mic()
-        self.assertFalse(r.to_dict()['data']['google']['expectUserResponse'])
-
-    def test_to_dict(self):
-        r = Response()
-        payload = r.to_dict()
-        self.assertTrue('messages' in payload)
-        self.assertTrue('data' in payload)
-        self.assertTrue('contextOut' not in payload)
-
-        r.add_context({'foo': 'bar'})
-        payload = r.to_dict()
-        self.assertTrue('messages' in payload)
-        self.assertTrue('data' in payload)
-        self.assertTrue('contextOut' in payload)
-
-    def test_add_message(self):
-        r = Response()
-        self.assertEqual(r._messages, [r.initial_message])
-
-        r.add_message({'foo': 'bar'})
-        self.assertEqual(
-            r._messages,
-            [r.initial_message, {'foo': 'bar'}]
-        )
-
-        r.add_message({'bar': 'foo'}, 0)
-        self.assertEqual(
-            r._messages,
-            [{'bar': 'foo'}, r.initial_message, {'foo': 'bar'}]
-        )
-
-    def test_add_context(self):
-        r = Response()
-        self.assertEqual(r._contexts, [])
-
-        r.add_context({'foo': 'bar'})
-        self.assertEqual(
-            r._contexts,
-            [{'foo': 'bar'}]
-        )
-
-        r.add_context({'bar': 'foo'}, 0)
-        self.assertEqual(
-            r._contexts,
-            [{'bar': 'foo'}, {'foo': 'bar'}]
-        )
-
-    def test_add_permission(self):
-        r = Response()
-        self.assertEqual(r._permissions, [])
-
-        r.add_permission('because', [Agent.SupportedPermissions.NAME])
-        self.assertEqual(
-            r._permissions,
-            [('because', [r.PERMISSIONS[Agent.SupportedPermissions.NAME]])]
-        )
-
-        r.add_permission('cause', [Agent.SupportedPermissions.NAME])
-        self.assertEqual(
-            r._permissions,
-            [('because', [r.PERMISSIONS[Agent.SupportedPermissions.NAME]]),
-             ('cause', [r.PERMISSIONS[Agent.SupportedPermissions.NAME]])]
-        )
-
-    def test_to_dict_permissions(self):
-        r = Response()
-        r.add_permission('because', [Agent.SupportedPermissions.NAME])
-        r.add_permission('cause', [Agent.SupportedPermissions.NAME])
-
-        data = r.to_dict()['data']['google']['systemIntent']['data']
-        self.assertEqual(
-            data['permissions'],
-            [r.PERMISSIONS[Agent.SupportedPermissions.NAME]])
-
-        r.add_permission('because', [Agent.SupportedPermissions.COARSE_LOCATION,
-                                     Agent.SupportedPermissions.PRECISE_LOCATION])
-        data = r.to_dict()['data']['google']['systemIntent']['data']
-        self.assertEqual(
-            set(data['permissions']),
-            {r.PERMISSIONS[Agent.SupportedPermissions.NAME],
-             r.PERMISSIONS[Agent.SupportedPermissions.COARSE_LOCATION],
-             r.PERMISSIONS[Agent.SupportedPermissions.PRECISE_LOCATION]})
-
+FAKE_GOOGLE_ASSISTANT_REQUEST = {
+    'result': {},
+    'originalRequest': {}
+}
 
 @mock.patch('apiai_assistant.corpus.Corpus.init_corpus', mocked_init_corpus(FAKE_CORPUS))
 class AgentTestCase(unittest.TestCase):
     def test_repr(self):
-        agent = Agent()
+        agent = Agent(request=FAKE_GOOGLE_ASSISTANT_REQUEST)
         self.assertEqual(
             str(agent), '<Agent: (OK)>')
 
@@ -125,7 +33,7 @@ class AgentTestCase(unittest.TestCase):
             str(agent), '<Agent: (GenericError - foo)>')
 
     def test_error(self):
-        agent = Agent()
+        agent = Agent(request=FAKE_GOOGLE_ASSISTANT_REQUEST)
         agent.error('foo')
 
         self.assertEqual(agent.response.to_dict(), {'error': '400'})
@@ -136,7 +44,7 @@ class AgentTestCase(unittest.TestCase):
         self.assertEqual(agent.response.error_message, 'foo')
 
     def test_abort(self):
-        agent = Agent()
+        agent = Agent(request=FAKE_GOOGLE_ASSISTANT_REQUEST)
         agent.abort('foo')
 
         self.assertEqual(agent.response.to_dict(), {'error': '400'})
@@ -147,7 +55,8 @@ class AgentTestCase(unittest.TestCase):
         self.assertEqual(agent.response.error_message, 'foo')
 
     def test_tell(self):
-        agent = Agent(corpus=Corpus('foo.json'))
+        agent = Agent(
+            request=FAKE_GOOGLE_ASSISTANT_REQUEST, corpus=Corpus('foo.json'))
         key = 'foo'
         context = {'name': 'bar'}
         agent.tell(key, context)
@@ -169,7 +78,8 @@ class AgentTestCase(unittest.TestCase):
         )
 
     def test_ask(self):
-        agent = Agent(corpus=Corpus('foo.json'))
+        agent = Agent(
+            request=FAKE_GOOGLE_ASSISTANT_REQUEST, corpus=Corpus('foo.json'))
         key = 'foo'
         context = {'name': 'bar'}
         agent.ask(key, context)
@@ -191,7 +101,7 @@ class AgentTestCase(unittest.TestCase):
         )
 
     def test_tell_raw(self):
-        agent = Agent()
+        agent = Agent(request=FAKE_GOOGLE_ASSISTANT_REQUEST)
         text = 'foo'
         agent.tell_raw(text)
         payload = agent.response.to_dict()
@@ -211,7 +121,7 @@ class AgentTestCase(unittest.TestCase):
         )
 
     def test_ask_raw(self):
-        agent = Agent()
+        agent = Agent(request=FAKE_GOOGLE_ASSISTANT_REQUEST)
         text = 'foo'
         agent.ask_raw(text)
         payload = agent.response.to_dict()
@@ -231,7 +141,8 @@ class AgentTestCase(unittest.TestCase):
         )
 
     def test_suggest(self):
-        agent = Agent(corpus=Corpus('foo.json'))
+        agent = Agent(
+            request=FAKE_GOOGLE_ASSISTANT_REQUEST, corpus=Corpus('foo.json'))
         key = 'confirmation'
         agent.suggest(key)
         payload = agent.response.to_dict()
@@ -252,7 +163,7 @@ class AgentTestCase(unittest.TestCase):
         )
 
     def test_suggest_raw(self):
-        agent = Agent()
+        agent = Agent(request=FAKE_GOOGLE_ASSISTANT_REQUEST)
         suggestions = ['Yes', 'No']
         agent.suggest_raw(suggestions)
         payload = agent.response.to_dict()
@@ -273,7 +184,8 @@ class AgentTestCase(unittest.TestCase):
         )
 
     def test_ask_for_confirmation(self):
-        agent = Agent(corpus=Corpus('foo.json'))
+        agent = Agent(
+            request=FAKE_GOOGLE_ASSISTANT_REQUEST, corpus=Corpus('foo.json'))
         key = 'foo'
         agent.ask_for_confirmation(key)
 
@@ -303,7 +215,8 @@ class AgentTestCase(unittest.TestCase):
         )
 
     def test_ask_for_confirmation_raw(self):
-        agent = Agent(corpus=Corpus('foo.json'))
+        agent = Agent(
+            request=FAKE_GOOGLE_ASSISTANT_REQUEST, corpus=Corpus('foo.json'))
         question = 'Annie are you OK?'
         agent.ask_for_confirmation_raw(question)
 
@@ -333,7 +246,7 @@ class AgentTestCase(unittest.TestCase):
         )
 
     def test_suggest_raw_one_suggestion(self):
-        agent = Agent()
+        agent = Agent(request=FAKE_GOOGLE_ASSISTANT_REQUEST)
         suggestion = 'Sure'
         agent.suggest_raw(suggestion)
         payload = agent.response.to_dict()
@@ -353,7 +266,7 @@ class AgentTestCase(unittest.TestCase):
         )
 
     def test_add_context(self):
-        agent = Agent()
+        agent = Agent(request=FAKE_GOOGLE_ASSISTANT_REQUEST)
         context_name = 'foobar'
         agent.add_context(context_name)
         payload = agent.response.to_dict()
@@ -373,7 +286,7 @@ class AgentTestCase(unittest.TestCase):
         title = "foo"
         url = "bar.com"
         widget = LinkOutChipWidget(title, url)
-        agent = Agent()
+        agent = Agent(request=FAKE_GOOGLE_ASSISTANT_REQUEST)
         agent.show(widget)
         payload = agent.response.to_dict()
         self.assertEqual(len(payload['messages']), 2)
@@ -390,9 +303,8 @@ class AgentTestCase(unittest.TestCase):
             ]
         )
 
-
     def test_ask_for_permissions(self):
-        agent = Agent()
+        agent = Agent(request=FAKE_GOOGLE_ASSISTANT_REQUEST)
         reason = 'Just because'
         agent.ask_for_permissions(reason, [agent.SupportedPermissions.NAME])
         payload = agent.response.to_dict()

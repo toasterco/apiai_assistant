@@ -57,7 +57,8 @@ class Agent(object):
         if request:
             self.origin = get_origin(request)
             self.parser = parser.get_parser(self.origin, request)
-            self.response = response.get_response(self.origin)
+
+        self.response = response.get_response(self.origin)
 
     def __repr__(self):
         return '<Agent: ({}{})>'.format(

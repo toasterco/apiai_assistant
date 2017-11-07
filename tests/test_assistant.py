@@ -77,7 +77,7 @@ class AssistantTestCase(unittest.TestCase):
 
     def test_validate_request(self):
         ass = Assistant()
-        agent = Agent(request={'foo': 'bar'})
+        agent = Agent(request={'result': {}, 'originalRequest': {}})
         ass.validate(agent)
 
         self.assertEqual(agent.code, Status.InvalidData)
