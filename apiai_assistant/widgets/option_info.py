@@ -2,7 +2,7 @@ from . import GoogleAssistantWidget
 from . import InvalidGoogleAssistantWidget
 
 
-class OptionInfo(GoogleAssistantWidget):
+class GoogleAssistantOptionInfo(GoogleAssistantWidget):
     def __init__(self, key, synonyms=None):
         if key is None and synonyms is None:
             raise InvalidGoogleAssistantWidget(
@@ -11,7 +11,7 @@ class OptionInfo(GoogleAssistantWidget):
         self.key = key
         self.synonyms = synonyms or []
 
-    def render(self):
+    def render_google_assistant(self, origin):
         return {
             'key': self.key,
             'synonyms': self.synonyms

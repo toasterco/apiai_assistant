@@ -1,22 +1,25 @@
-from . import GoogleAssistantWidget
+from . import BaseWidget
+from . import WidgetTypes
 
 
-class SuggestionsWidget(GoogleAssistantWidget):
+class SuggestionsWidget(BaseWidget):
     def __init__(self, suggestions):
         self.suggestions = suggestions or []
-        self.type = 'suggestion_chips'
 
-        super(SuggestionsWidget, self).__init__()
-
-    def render(self):
-        payload = super(SuggestionsWidget, self).render()
-
-        payload.update({
-            'type': self.type,
+    def render_google_assistant(self, origin):
+        return {
+            'platform': origin,
+            'type': 'suggestion_chips',
             'suggestions': [
                 {'title': suggestion}
                 for suggestion in self.suggestions
             ]
-        })
+        }
 
-        return payload
+    def render_api_ai(self, origin):
+        return {
+            'platform': origin,
+            'replies': self.suggestions,
+            'title': 'Please pick one',
+            'type': WidgetTypes.Suggestions
+        }

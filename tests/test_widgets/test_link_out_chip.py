@@ -1,15 +1,16 @@
 import unittest
 
-from apiai_assistant.widgets import LinkOutChipWidget
+from apiai_assistant import Platforms
+from apiai_assistant.widgets import GoogleAssistantLinkOutChipWidget
 
 
-class LinkOutChipWidgetTestCase(unittest.TestCase):
+class GoogleAssistantLinkOutChipWidgetTestCase(unittest.TestCase):
     def test_basic(self):
         title = "foo"
         url = "bar.com"
-        w = LinkOutChipWidget(title, url)
+        w = GoogleAssistantLinkOutChipWidget(title, url)
         self.assertEqual(
-            w.render(),
+            w.render(Platforms.GOOGLE_ASSISTANT),
             {
                 "platform": "google",
                 "type": "link_out_chip",

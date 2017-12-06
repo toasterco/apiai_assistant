@@ -4,11 +4,15 @@ Provides Actions on Google Parser classes to read from the API.ai POST
 request payload and offers abstractions to access objects of the payload
 """
 
+import random
+
 
 from . import utils
+from . import Platforms
 
 DEFAULT_LOCALE = 'en-US'
 DEFAULT_USER_ID = 'APIAITEST'
+WELCOME_ACTION = random.getrandbits(64)
 
 
 class User(object):
@@ -88,7 +92,7 @@ class PayloadParser(object):
 
         raise NotImplementedError
 
-    def get(self, param, default=None, _type=None, globbing=False):
+    def get(self, param, default=None, _type=None, globbing=False, split_char=' '):
         """
         General getter to access parameters inside the API.ai request
 
@@ -125,7 +129,7 @@ class PayloadParser(object):
             if isinstance(value, list):
                 return value
             else:
-                return value.split(' ')
+                return value.split(split_char)
 
         return value
 
@@ -256,29 +260,24 @@ class AmazonAlexaParser(PayloadParser):
 
     @property
     def action(self):
-        return self.request['intent']['name']
+        if self.request['type'] == 'LaunchRequest':
+            return WELCOME_ACTION
+        intent = self.request.get('intent')
+        if intent:
+            return intent.get('name')
 
     @property
     def parameters(self):
-        return self.request.get('intent', {}).get('slots', {})
+        slots = self.request.get('intent', {}).get('slots', {})
+        return {
+            key: slot.get('value')
+            for key, slot in slots.items()
+            if slot.get('value')
+        }
 
     def get_contexts(self, name=None):
-        """ Get the contexts of the request or the context with name `name`
-
-        Args:
-            name (str, optional): name of the context to get
-        Returns:
-            list of contexts if `name` is None, otherwise the context with name
-            `name` or an empty :obj:`dict` if it couldn't be found
-        """
-
-        contexts = self.request.get('contexts', [])
-        if name:
-            for context in contexts:
-                if context['name'] == name:
-                    return context['parameters']
-            return {}
-        return contexts
+        # To do
+        return []
 
     @property
     def request(self):
@@ -330,9 +329,11 @@ class AmazonAlexaParser(PayloadParser):
 
 
 PARSERS = {
-    'APIAIConsole': GoogleAssistantParser,
-    'GoogleAssistant': GoogleAssistantParser,
-    'AmazonAlexa': AmazonAlexaParser
+    Platforms.API_AI: GoogleAssistantParser,
+    Platforms.FACEBOOK_MESSENGER: GoogleAssistantParser,
+    Platforms.SLACK_BOT: GoogleAssistantParser,
+    Platforms.GOOGLE_ASSISTANT: GoogleAssistantParser,
+    Platforms.AMAZON_ALEXA: AmazonAlexaParser
 }
 
 
@@ -341,4 +342,3 @@ def get_parser(origin, request):
     if parser:
         parser = parser(request)
     return parser
-

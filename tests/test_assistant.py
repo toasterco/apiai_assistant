@@ -5,7 +5,7 @@ import unittest
 from apiai_assistant.assistant import Assistant
 from apiai_assistant.agent import Agent, Status
 
-from tests import get_dummy_request
+from tests import get_dummy_google_request
 
 
 class AssistantTestCase(unittest.TestCase):
@@ -31,7 +31,7 @@ class AssistantTestCase(unittest.TestCase):
         def bar(agent):
             agent.tell_raw('foobar')
 
-        request = get_dummy_request()
+        request = get_dummy_google_request()
         request['result']['action'] = 'foo'
         agent = ass.process(request)
         self.assertEqual(len(agent.response._messages), 2)
@@ -49,7 +49,7 @@ class AssistantTestCase(unittest.TestCase):
     def test_process_invalid(self):
         ass = Assistant()
 
-        request = get_dummy_request()
+        request = get_dummy_google_request()
         request['result']['action'] = 'foo'
         agent = ass.process(request)
         self.assertEqual(len(agent.response._messages), 1)
@@ -68,7 +68,7 @@ class AssistantTestCase(unittest.TestCase):
         def bar(agent):
             agent.tell_raw('foobar')
 
-        request = get_dummy_request()
+        request = get_dummy_google_request()
         request['result']['action'] = 'foo'
 
         agent = ass.process(request, headers={'magic-key': magic_key[::-1]})
@@ -115,7 +115,7 @@ class AssistantTestCase(unittest.TestCase):
 
         self.assertEqual(ass.action_map[action], bar)
 
-        request = get_dummy_request()
+        request = get_dummy_google_request()
         request['result']['action'] = action[::-1]
         agent = Agent(request=request)
         ass.validate(agent)

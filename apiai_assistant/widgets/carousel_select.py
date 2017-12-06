@@ -1,19 +1,19 @@
 from . import GoogleAssistantWidget
 
 
-class CarouselSelectWidget(GoogleAssistantWidget):
+class GoogleAssistantCarouselSelectWidget(GoogleAssistantWidget):
     def __init__(self, items):
         self.items = items
         self.type = 'carousel_card'
 
-        super(CarouselSelectWidget, self).__init__()
+        super(GoogleAssistantCarouselSelectWidget, self).__init__()
 
-    def render(self):
-        payload = super(CarouselSelectWidget, self).render()
+    def render_google_assistant(self, origin):
+        payload = super(GoogleAssistantCarouselSelectWidget, self).render_google_assistant(origin)
 
         payload.update({
             'type': self.type,
-            'items': [item.render() for item in self.items]
+            'items': [item.render(origin) for item in self.items]
         })
 
         return payload

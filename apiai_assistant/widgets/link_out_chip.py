@@ -1,16 +1,16 @@
 from . import GoogleAssistantWidget
 
 
-class LinkOutChipWidget(GoogleAssistantWidget):
+class GoogleAssistantLinkOutChipWidget(GoogleAssistantWidget):
     def __init__(self, title, url):
         self.title = title
         self.url = url
         self.type = 'link_out_chip'
 
-        super(LinkOutChipWidget, self).__init__()
+        super(GoogleAssistantLinkOutChipWidget, self).__init__()
 
-    def render(self):
-        payload = super(LinkOutChipWidget, self).render()
+    def render_google_assistant(self, origin):
+        payload = super(GoogleAssistantLinkOutChipWidget, self).render_google_assistant(origin)
 
         payload.update({
             'type': self.type,

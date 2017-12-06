@@ -1,15 +1,16 @@
 import unittest
 
+from apiai_assistant import Platforms
 from apiai_assistant.widgets import InvalidGoogleAssistantWidget
-from apiai_assistant.widgets import OptionInfo
+from apiai_assistant.widgets import GoogleAssistantOptionInfo
 
 
-class OptionInfoTestCase(unittest.TestCase):
+class GoogleAssistantOptionInfoTestCase(unittest.TestCase):
     def test_basic(self):
         key = "foobar"
-        w = OptionInfo(key)
+        w = GoogleAssistantOptionInfo(key)
         self.assertEqual(
-            w.render(),
+            w.render(Platforms.GOOGLE_ASSISTANT),
             {
                 "key": key,
                 "synonyms": []
@@ -18,13 +19,13 @@ class OptionInfoTestCase(unittest.TestCase):
 
     def test_missing_key(self):
         with self.assertRaises(InvalidGoogleAssistantWidget):
-            OptionInfo(None)
+            GoogleAssistantOptionInfo(None)
 
     def test_missing_key_but_synonyms(self):
         synonyms = ['foo', 'bar']
-        w = OptionInfo(None, synonyms)
+        w = GoogleAssistantOptionInfo(None, synonyms)
         self.assertEqual(
-            w.render(),
+            w.render(Platforms.GOOGLE_ASSISTANT),
             {
                 "key": None,
                 "synonyms": synonyms

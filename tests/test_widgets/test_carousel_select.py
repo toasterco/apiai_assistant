@@ -1,20 +1,23 @@
 import unittest
 
-from apiai_assistant.widgets import OptionInfo
-from apiai_assistant.widgets import SelectItem
-from apiai_assistant.widgets import CarouselSelectWidget
+from apiai_assistant import Platforms
+from apiai_assistant.widgets import GoogleAssistantOptionInfo
+from apiai_assistant.widgets import GoogleAssistantSelectItem
+from apiai_assistant.widgets import GoogleAssistantCarouselSelectWidget
 
 
-class CarouselSelectWidgetTestCase(unittest.TestCase):
+class GoogleAssistantCarouselSelectWidgetTestCase(unittest.TestCase):
     def test_basic(self):
         item_keys = ['a', 'b', 'c']
         items = [
-            SelectItem(title=key, option_info=OptionInfo(key))
+            GoogleAssistantSelectItem(
+                title=key,
+                option_info=GoogleAssistantOptionInfo(key))
             for key in item_keys
         ]
-        w = CarouselSelectWidget(items)
+        w = GoogleAssistantCarouselSelectWidget(items)
         self.assertEqual(
-            w.render(),
+            w.render(Platforms.GOOGLE_ASSISTANT),
             {
                 "type": "carousel_card",
                 "platform": "google",

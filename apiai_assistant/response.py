@@ -5,6 +5,7 @@ to build responses according to their respective format
 """
 
 import agent
+from . import Platforms
 
 
 class BaseResponse(object):
@@ -32,9 +33,9 @@ class BaseResponse(object):
         self.expect_user_response = True
 
     def add_message(self, message, position=None):
-        if position is not None:
+        if position is not None and message:
             self._messages.insert(position, message)
-        else:
+        elif message:
             self._messages.append(message)
 
     def add_context(self, context, position=None):
@@ -117,13 +118,23 @@ class GoogleAssistantResponse(BaseResponse):
 
 class AmazonAlexaResponse(BaseResponse):
     def to_dict(self):
-        return {'data': []}
+        payload = {
+            "version": "1.0",
+            "response": {
+                "shouldEndSession": not self.expect_user_response,
+            }
+        }
 
+        for message in self._messages:
+            key = message.keys()[0]
+            payload['response'][key] = message[key]
+
+        return payload
 
 RESPONSES = {
-    'APIAIConsole': GoogleAssistantResponse,
-    'GoogleAssistant': GoogleAssistantResponse,
-    'AmazonAlexa': AmazonAlexaResponse
+    Platforms.API_AI: GoogleAssistantResponse,
+    Platforms.GOOGLE_ASSISTANT: GoogleAssistantResponse,
+    Platforms.AMAZON_ALEXA: AmazonAlexaResponse
 }
 
 

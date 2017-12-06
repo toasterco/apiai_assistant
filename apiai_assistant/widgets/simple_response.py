@@ -1,8 +1,9 @@
-from . import GoogleAssistantWidget
-from . import InvalidGoogleAssistantWidget
+from . import BaseWidget
+from . import WidgetTypes
+from . import InvalidWidget
 
 
-class SimpleResponseWidget(GoogleAssistantWidget):
+class SimpleResponseWidget(BaseWidget):
     def __init__(self, speech, text, ssml=True):
         self.speech = speech
         self.text = text
@@ -10,10 +11,9 @@ class SimpleResponseWidget(GoogleAssistantWidget):
             self.text = speech
 
         if speech is None and text is None:
-            raise InvalidGoogleAssistantWidget(
+            raise InvalidWidget(
                 'Please at least specify text or speech')
 
-        self.type = 'simple_response'
         self._ssml = ssml
 
         super(SimpleResponseWidget, self).__init__()
@@ -21,13 +21,31 @@ class SimpleResponseWidget(GoogleAssistantWidget):
     def ssml_format(self, s):
         return '<speak>{}</speak>'.format(s)
 
-    def render(self):
-        payload = super(SimpleResponseWidget, self).render()
+    def render_api_ai(self, origin):
+        return {
+            'platform': origin,
+            'speech': self.text,
+            'type': WidgetTypes.Text
+        }
 
-        payload.update({
-            'type': self.type,
+    def render_amazon_alexa(self, origin):
+        payload = {
+            'type': 'PlainText',
+            'text': self.text,
+        }
+        if self._ssml:
+            payload['type'] = 'SSML'
+            payload['ssml'] = self.ssml_format(self.speech)
+
+        return {'outputSpeech': payload}
+
+    def render_google_assistant(self, origin):
+        payload = {
+            'platform': origin,
             'displayText': self.text,
-        })
+            'type': 'simple_response'
+        }
+
         if self._ssml:
             payload['ssml'] = self.ssml_format(self.speech)
         else:

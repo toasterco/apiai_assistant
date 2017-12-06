@@ -1,7 +1,7 @@
 from . import GoogleAssistantWidget
 
 
-class SelectItem(GoogleAssistantWidget):
+class GoogleAssistantSelectItem(GoogleAssistantWidget):
     def __init__(self, title, option_info,
                  text=None, image=None):
         self.title = title
@@ -10,12 +10,12 @@ class SelectItem(GoogleAssistantWidget):
         self.text = text
         self.image = image
 
-        super(SelectItem, self).__init__()
+        super(GoogleAssistantSelectItem, self).__init__()
 
-    def render(self):
+    def render_google_assistant(self, origin):
         return {
             'title': self.title,
             'description': self.text,
-            'optionInfo': self.option_info.render(),
-            'image': self.image.render() if self.image else None
+            'optionInfo': self.option_info.render(origin),
+            'image': self.image.render(origin) if self.image else None
         }

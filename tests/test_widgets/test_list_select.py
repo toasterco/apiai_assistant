@@ -1,23 +1,27 @@
 import unittest
 
-from apiai_assistant.widgets import OptionInfo
-from apiai_assistant.widgets import SelectItem
-from apiai_assistant.widgets import ListSelectWidget
+from apiai_assistant import Platforms
+from apiai_assistant.widgets import GoogleAssistantOptionInfo
+from apiai_assistant.widgets import GoogleAssistantSelectItem
+from apiai_assistant.widgets import GoogleAssistantListSelectWidget
 
 
 class ListSelectWidgetTestCase(unittest.TestCase):
     def test_basic(self):
         item_keys = ['a', 'b', 'c']
         items = [
-            SelectItem(title=key, option_info=OptionInfo(key))
+            GoogleAssistantSelectItem(
+                title=key,
+                option_info=GoogleAssistantOptionInfo(key))
             for key in item_keys
         ]
-        w = ListSelectWidget(items)
+        w = GoogleAssistantListSelectWidget(items)
+        origin = Platforms.GOOGLE_ASSISTANT
         self.assertEqual(
-            w.render(),
+            w.render(origin),
             {
                 "type": "list_card",
-                "platform": "google",
+                "platform": origin,
                 "title": None,
                 "items": [
                     {

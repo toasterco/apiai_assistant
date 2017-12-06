@@ -7,6 +7,7 @@ import logging
 import functools
 
 import agent
+import parser
 from .corpus import Corpus
 
 
@@ -31,7 +32,7 @@ class Assistant(object):
 
         self.magic_key = magic_key
 
-    def intent(self, action_id):
+    def intent(self, action_id, **kwargs):
         """ Decorator to register actions
 
         Example:
@@ -48,6 +49,12 @@ class Assistant(object):
 
         def decorator(f):
             self.action_map[action_id] = f
+
+            if kwargs.get('welcome_intent'):
+                if parser.WELCOME_ACTION in self.action_map:
+                    raise ValueError(
+                        'Only one actiom can be a welcome intent. Action `{}`'.format(action_id))
+                self.action_map[parser.WELCOME_ACTION] = f
 
             @functools.wraps(f)
             def wrapped(*args, **kwargs):

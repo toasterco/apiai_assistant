@@ -3,11 +3,12 @@ import unittest
 
 from tests import mocked_init_corpus
 
+from apiai_assistant import Platforms
 from apiai_assistant.agent import Agent
 from apiai_assistant.agent import get_origin
 from apiai_assistant.agent import Status
 from apiai_assistant.corpus import Corpus
-from apiai_assistant.widgets import LinkOutChipWidget
+from apiai_assistant.widgets import GoogleAssistantLinkOutChipWidget
 
 
 FAKE_CORPUS = {
@@ -20,6 +21,11 @@ FAKE_GOOGLE_ASSISTANT_REQUEST = {
     'originalRequest': {}
 }
 
+FAKE_FACEBOOK_MESSENGER_REQUEST = {
+    'result': {},
+    'originalRequest': {'source': 'facebook'}
+}
+
 FAKE_AMAZON_ALEXA_REQUEST = {
     'session': {},
     'context': {},
@@ -30,9 +36,9 @@ FAKE_AMAZON_ALEXA_REQUEST = {
 @mock.patch('apiai_assistant.corpus.Corpus.init_corpus', mocked_init_corpus(FAKE_CORPUS))
 class AgentTestCase(unittest.TestCase):
     def test_get_origin(self):
-        self.assertEqual('GoogleAssistant', get_origin(FAKE_GOOGLE_ASSISTANT_REQUEST))
-        self.assertEqual('AmazonAlexa', get_origin(FAKE_AMAZON_ALEXA_REQUEST))
-        self.assertEqual(None, get_origin({'foo': 'bar'}))
+        self.assertEqual(Platforms.GOOGLE_ASSISTANT, get_origin(FAKE_GOOGLE_ASSISTANT_REQUEST))
+        self.assertEqual(Platforms.AMAZON_ALEXA, get_origin(FAKE_AMAZON_ALEXA_REQUEST))
+        self.assertEqual(Platforms.API_AI, get_origin({'foo': 'bar'}))
 
     def test_repr(self):
         agent = Agent(request=FAKE_GOOGLE_ASSISTANT_REQUEST)
@@ -335,7 +341,7 @@ class AgentTestCase(unittest.TestCase):
     def test_show(self):
         title = "foo"
         url = "bar.com"
-        widget = LinkOutChipWidget(title, url)
+        widget = GoogleAssistantLinkOutChipWidget(title, url)
         agent = Agent(request=FAKE_GOOGLE_ASSISTANT_REQUEST)
         agent.show(widget)
         payload = agent.response.to_dict()
@@ -352,6 +358,15 @@ class AgentTestCase(unittest.TestCase):
                 }
             ]
         )
+
+    def test_show_no_message(self):
+        title = "foo"
+        url = "bar.com"
+        widget = GoogleAssistantLinkOutChipWidget(title, url)
+        agent = Agent(request=FAKE_FACEBOOK_MESSENGER_REQUEST)
+        agent.show(widget)
+        payload = agent.response.to_dict()
+        self.assertEqual(payload['messages'], [])
 
     def test_ask_for_permissions(self):
         agent = Agent(request=FAKE_GOOGLE_ASSISTANT_REQUEST)

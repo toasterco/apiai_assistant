@@ -5,9 +5,11 @@ implementation to be able to interact with the user through the agent """
 
 
 from . import utils
-from . import parser
 from . import widgets
-# `import response` at the end of the file
+from . import Platforms
+# At the bottom of this file
+# `import parser`
+# `import response`
 
 Status = utils.enum(
     'OK',
@@ -17,17 +19,21 @@ Status = utils.enum(
 
 
 REQUEST_SHAPES = {
-    'GoogleAssistant': ['result', 'originalRequest'],
-    'APIAIConsole': ['result', 'sessionId'],
-    'AmazonAlexa': ['request', 'session', 'context'],
+    Platforms.GOOGLE_ASSISTANT: ['result', 'originalRequest'],
+    Platforms.API_AI: ['result', 'sessionId'],
+    Platforms.AMAZON_ALEXA: ['request', 'session', 'context'],
 }
 
 
 def get_origin(request):
-    for origin, shape in REQUEST_SHAPES.items():
-        if all(element in request for element in shape):
-            return origin
-    return None
+    origin = None
+    if 'originalRequest' in request:
+        origin = request['originalRequest'].get('source')
+    if not origin:
+        for origin, shape in REQUEST_SHAPES.items():
+            if all(element in request for element in shape):
+                return origin
+    return origin
 
 
 class Agent(object):
@@ -169,9 +175,10 @@ class Agent(object):
         Renders a rich response widget and add it to the response's messages
         """
 
-        message = obj.render()
+        message = obj.render(self.origin)
 
-        self.response.add_message(message)
+        if message:
+            self.response.add_message(message)
 
     def add_context(self, context_name, parameters=None, lifespan=5):
         """
@@ -201,5 +208,6 @@ class Agent(object):
         self.suggest_raw(self.corpus.get_confirmation())
 
 
-# Cyclic import
+# # Cyclic import
+import parser
 import response
